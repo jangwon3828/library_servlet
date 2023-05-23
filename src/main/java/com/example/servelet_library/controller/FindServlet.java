@@ -1,7 +1,7 @@
 package com.example.servelet_library.controller;
 
 import com.example.servelet_library.domain.Book;
-import com.example.servelet_library.domain.BookRepository;
+import com.example.servelet_library.service.BookReadService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,7 +15,7 @@ import java.util.List;
 //컨트롤러 만들때 항상
 public class FindServlet extends HttpServlet {
 
-    private final BookRepository bookRepository = BookRepository.getInstance();
+    private final BookReadService bookReadService = BookReadService.getInstance();
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,16 +25,16 @@ public class FindServlet extends HttpServlet {
         List<Book> books=new ArrayList<>();
         switch (search) {
             case "전체":
-                books  = bookRepository.findByThreeWay(searchData);
+                books  = bookReadService.findByThreeWay(searchData);
                 break;
             case "제목":
-                books  = bookRepository.findByBookName(searchData);
+                books  = bookReadService.findByBookName(searchData);
                 break;
             case "저자":
-                books  = bookRepository.findByAuthor(searchData);
+                books  = bookReadService.findByAuthor(searchData);
                 break;
             case "출판사":
-                books  = bookRepository.findByPublisher(searchData);
+                books  = bookReadService.findByPublisher(searchData);
                 break;
         }
         resp.setContentType("text/html;charset=euc-kr");
@@ -69,9 +69,9 @@ public class FindServlet extends HttpServlet {
         pw.println("<th>출판사</th>");
         pw.println("<th>출판일자</th>");
         pw.println("<th>잔여 권수</th>");
-        pw.println("<th>여태까지 대여횟수</th>"); //대출가능 여부로 변경해야함
+        pw.println("<th>여태까지 대여횟수</th>");
         pw.println("<th>꽂혀있는 위치</th>");
-        pw.println("<th>책고유값</th>");//대출예약버튼
+        pw.println("<th>책고유값</th>");//대출예약버튼 만약 0이라면 대출 불가능
         pw.println("</tr>");
 
 

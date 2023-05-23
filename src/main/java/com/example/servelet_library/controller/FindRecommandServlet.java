@@ -2,6 +2,7 @@ package com.example.servelet_library.controller;
 
 import com.example.servelet_library.domain.Book;
 import com.example.servelet_library.domain.BookRepository;
+import com.example.servelet_library.service.BookReadService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,13 +16,12 @@ import java.util.List;
 //컨트롤러 만들때 항상
 public class FindRecommandServlet extends HttpServlet {
 
-    private final BookRepository bookRepository = BookRepository.getInstance();
+    private final BookReadService bookReadService = BookReadService.getInstance();
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("euc-kr");
-        List<Book> books=new ArrayList<>();
-
+        List<Book> byTop10 = bookReadService.findByTop10();
         resp.setContentType("text/html;charset=euc-kr");
 
         PrintWriter pw = resp.getWriter();
@@ -61,7 +61,7 @@ public class FindRecommandServlet extends HttpServlet {
 
 
 
-        for (Book book : books) {
+        for (Book book : byTop10) {
             pw.println("<tr>");
             pw.println("<td>" + book.getBook_name() + "</td>");
             pw.println("<td>" + book.getAuthor() + "</td>");
@@ -76,7 +76,7 @@ public class FindRecommandServlet extends HttpServlet {
 
         pw.println("</table>");
         pw.println("<br>");
-        pw.println("<a href='/'>메인페이지로 이동</a>");
+        pw.println("<a href='/library_servlet'>메인페이지로 이동</a>");
 
         pw.println("</body>");
         pw.println("</html>");

@@ -12,6 +12,8 @@ import java.util.List;
 
 public class BookReadService {
     private static BookReadService bookReadService=new BookReadService();
+    private BookRepository bookRepository=BookRepository.getInstance();
+
     private BookReadService(){
     }
 
@@ -19,25 +21,21 @@ public class BookReadService {
         return bookReadService;
     }
 
-    private BookRepository bookRepository=BookRepository.getInstance();
-
-    public  List<Book> findByAuthor(){
-        String author = "저자가 넘어옴";
-        List<Book> books = bookRepository.findByAuthor(author);
-        return books;
+    public  List<Book> findByAuthor(String book){
+        return bookRepository.findByAuthor(book);
     }
 
 
-    public  List<Book> findByBookName(){
-        String book = "책이름이 넘어옴";
-        List<Book> books = bookRepository.findByBookName(book);
-        return books;
+    public  List<Book> findByBookName(String book){
+        return bookRepository.findByBookName(book);
     }
 
-    public  List<Book> findByPublisher(){
-        String publisher ="출판사가 넘어옴";
-        List<Book> books = bookRepository.findByPublisher(publisher);
-        return books;
+    public List<Book> findByThreeWay(String searchData) {
+        return bookRepository.findByThreeWay(searchData);
+    }
+
+    public  List<Book> findByPublisher(String book){
+        return bookRepository.findByPublisher(book);
     }
 
     public  List<Book> findByYear(){
@@ -77,4 +75,5 @@ public class BookReadService {
             System.out.println("책의 정보가 존재하지 않습니다.");
         }
     }
+
 }

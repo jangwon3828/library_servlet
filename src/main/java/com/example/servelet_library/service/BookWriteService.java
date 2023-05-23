@@ -38,50 +38,50 @@ public class BookWriteService {
         bookRepository.insertBook(book);
     }
 
-
-    public void checkOutBook() {
-
-
-        List<Book> books = new ArrayList<>();
-        Long index;
-        while (books.size()==0) {
-            index = null;
-            books = selectFind(index, books);
-        }
-        Long bookId = null;
-        bookRepository.checkoutBook(bookId);
-
-    }
-
-    public void returnBook() {
-        List<Book> books = null;
-        Long index;
-        while (books == null) {
-            index = null;
-            books = selectFind(index, books);
-        }
-        Long bookId = null;
-      bookRepository.returnBook(bookId);
-    }
-
-
-    private List<Book> selectFind(Long index, List<Book> books) {
-        int idx= Math.toIntExact(index);
-        switch (idx) {
-            case 1: {
-                books = bookReadService.findByAuthor();
-            }
-            break;
-            case 2: {
-                books = bookReadService.findByBookName();
-            }
-            break;
-            case 3: {
-                books = bookReadService.findByPublisher();
-            }
-            break;
-        }
-        return books;
-
-    }
+//
+//    public void checkOutBook() {
+//
+//
+//        List<Book> books = new ArrayList<>();
+//        Long index;
+//        while (books.size()==0) {
+//            index = null;
+//            books = selectFind(index, books);
+//        }
+//        Long bookId = null;
+//        bookRepository.checkoutBook(bookId);
+//
+//    }
+//
+//    public void returnBook() {
+//        List<Book> books = null;
+//        Long index;
+//        while (books == null) {
+//            index = null;
+//            books = selectFind(index, books);
+//        }
+//        Long bookId = null;
+//      bookRepository.returnBook(bookId);
+//    }
+//
+//
+//    private List<Book> selectFind(Long index, List<Book> books) {
+//        int idx= Math.toIntExact(index);
+//        switch (idx) {
+//            case 1: {
+//                books = bookReadService.findByAuthor();
+//            }
+//            break;
+//            case 2: {
+//                books = bookReadService.findByBookName();
+//            }
+//            break;
+//            case 3: {
+//                books = bookReadService.findByPublisher();
+//            }
+//            break;
+//        }
+//        return books;
+//
+//    }
 }
