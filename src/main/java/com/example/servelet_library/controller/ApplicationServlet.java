@@ -47,7 +47,7 @@ public class ApplicationServlet extends HttpServlet {
         resp.setContentType("text/html; charset=utf-8");
 
         PrintWriter out = resp.getWriter();
-        out.println("<script>alert('신청이 완료되었습니다.'); location.href=\"/library_servlet/html/index.html\";</script>");
+        out.println("<script>alert('신청이 완료되었습니다.'); location.href=\"/library_servlet\";</script>");
         out.close();
 
 

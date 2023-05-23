@@ -1,6 +1,7 @@
 package com.example.servelet_library.controller;
 
 import com.example.servelet_library.domain.book.Book;
+import com.example.servelet_library.domain.dto.BooksPage;
 import com.example.servelet_library.service.book.BookReadService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -9,17 +10,17 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 //컨트롤러 만들때 항상
-public class FindRecommandServlet extends HttpServlet {
+public class ManageServlet extends HttpServlet {
 
     private final BookReadService bookReadService = BookReadService.getInstance();
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
-        List<Book> byTop10 = bookReadService.findByTop10();
+        BooksPage books=bookReadService.findAll();
+
         resp.setContentType("text/html;charset=utf-8");
 
         PrintWriter pw = resp.getWriter();
@@ -87,7 +88,6 @@ public class FindRecommandServlet extends HttpServlet {
         pw.println("</head>");
         pw.println("<body>");
         pw.println("<div class=\"container\">");
-
         pw.println("<h1>책 목록</h1>");
         pw.println("<table>");
         pw.println("<tr>");
@@ -96,13 +96,12 @@ public class FindRecommandServlet extends HttpServlet {
         pw.println("<th>출판사</th>");
         pw.println("<th>출판일자</th>");
         pw.println("<th>잔여 권수</th>");
-        pw.println("<th>여태까지 대여횟수</th>"); //대출가능 여부로 변경해야함
+        pw.println("<th>누적 대여 횟수</th>");
         pw.println("<th>꽂혀있는 위치</th>");
-        pw.println("<th>책고유값</th>");//대출예약버튼
+        pw.println("<th>대출</th>");//대출예약버튼 만약 0이라면 대출 불가능
         pw.println("</tr>");
 
-
-        for (Book book : byTop10) {
+        for (Book book : books.getBooks()) {
             pw.println("<tr>");
             pw.println("<td>" + book.getBook_name() + "</td>");
             pw.println("<td>" + book.getAuthor() + "</td>");
@@ -111,17 +110,47 @@ public class FindRecommandServlet extends HttpServlet {
             pw.println("<td>" + book.getCount() + "</td>");
             pw.println("<td>" + book.getBorrow_count() + "</td>");
             pw.println("<td>" + book.getISBN_NO() + "</td>");
-            pw.println("<td>" + book.getBook_id() + "</td>");
+            pw.println("<td>");
+            pw.println("<a href='#' onclick='submitForm(" + book.getBook_id() + ")'>수정</a>");
+            pw.println("<form id='updateForm" + book.getBook_id() + "' method='post' action='updateok' style='display:none;'>");
+            pw.println("<input type='hidden' name='id' value='" +  book.getBook_id() + "'/>");
+            pw.println("<input type='hidden' name='updateName' value='독수리'/>");
+            pw.println("</form>");
+            pw.println("</td>");
             pw.println("</tr>");
         }
 
         pw.println("</table>");
+// 페이징 링크 생성
+        pw.println("<div>");
+
+// 이전 페이지 링크
+        if (books.hasPreviousPage()) {
+            pw.println("<a class=\"paging\" href=\"/library_servlet/paging?currentPage=" + books.getPreviousPage() +  "\">이전</a>");
+        }
+
+// 페이지 번호 링크
+        for (int i = 1; i <= books.getTotalPages(); i++) {
+            if (i == books.getCurrentPage()) {
+                pw.println("<strong>" + i + "</strong>");
+            } else {
+                pw.println("<a class=\"paging\" href=\"/library_servlet/manage_paging?currentPage=" + i + "\">" + i + "</a>");
+            }
+        }
+// 다음 페이지 링크
+        if (books.hasNextPage()) {
+            pw.println("<a class=\"paging\" href=\"/library_servlet/manage_paging?currentPage=" + books.getNextPage() +"\">다음</a>");
+        }
+
+        pw.println("</div>");
+        pw.println("</div>");
+
         pw.println("<br>");
-        pw.println("<a href='/library_servlet'>메인페이지로 이동</a>");
+        pw.println("<a class=\"back\" href='/library_servlet'>메인페이지로 이동</a>");
 
         pw.println("</body>");
         pw.println("</html>");
 
-
+        pw.close();
     }
 }

@@ -49,7 +49,7 @@ public class BookReadService {
     public  List<Book> findByTop10(){
         List<Book> books = bookRepository.findByAll();
         Collections.sort(books);
-        return books;
+        return books.subList(0, 10);
     }
 
     public void getDeleteBookInfo(Long book_id){

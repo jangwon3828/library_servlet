@@ -48,4 +48,21 @@
         <servlet-name>pagingServlet</servlet-name>
         <url-pattern>/paging</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>manage</servlet-name>
+        <servlet-class>com.example.servelet_library.controller.ManageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>manage</servlet-name>
+        <url-pattern>/manage</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>managePagingServlet</servlet-name>
+        <servlet-class>com.example.servelet_library.controller.ManagePagingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>managePagingServlet</servlet-name>
+        <url-pattern>/manage_paging</url-pattern>
+    </servlet-mapping>
 </web-app>
