@@ -6,7 +6,6 @@ import com.example.servelet_library.domain.book.BookRepository;
 import com.example.servelet_library.domain.dto.BooksPage;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,21 +20,21 @@ public class BookReadService {
         return bookReadService;
     }
 
-    public BooksPage findByAuthor(String book){
-        return bookRepository.findByAuthor(book);
+    public BooksPage findByAuthor(String book, Integer currentPage){
+        return bookRepository.findByAuthor(book,currentPage);
     }
 
 
-    public  BooksPage findByBookName(String book){
-        return bookRepository.findByBookName(book);
+    public  BooksPage findByBookName(String book, Integer currentPage){
+        return bookRepository.findByBookName(book,currentPage);
     }
 
-    public BooksPage findByThreeWay(String searchData) {
-        return bookRepository.findByThreeWay(searchData);
+    public BooksPage findByThreeWay(String searchData, Integer currentPage) {
+        return bookRepository.findByThreeWay(searchData,currentPage);
     }
 
-    public  BooksPage findByPublisher(String book){
-        return bookRepository.findByPublisher(book);
+    public  BooksPage findByPublisher(String book, Integer currentPage){
+        return bookRepository.findByPublisher(book,currentPage);
     }
     public  Book findByISBM(String book){
         return bookRepository.findByISBM(book);

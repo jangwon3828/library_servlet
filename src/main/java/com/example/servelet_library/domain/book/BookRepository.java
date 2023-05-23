@@ -32,16 +32,16 @@ public class BookRepository {
         return bookRepository;
     }
 
-    public BooksPage findByAuthor(String author) {
+    public BooksPage findByAuthor(String author, Integer currentPage) {
         String query = "select * from books where author like '%" + author + "%'";
-        return getBooks(query);
+        return getBooks(query, currentPage);
 
     }
 
-    public BooksPage findByThreeWay(String data) {
+    public BooksPage findByThreeWay(String data, Integer currentPage) {
         String query = "select * from books where author like '%" + data + "%' or bookname like '%" + data + "%' or publisher like '%" + data + "%'";
         ;
-        return getBooks(query);
+        return getBooks(query, currentPage);
 
     }
 
@@ -50,14 +50,14 @@ public class BookRepository {
         return getBook(query);
     }
 
-    public BooksPage findByBookName(String book_name) {
+    public BooksPage findByBookName(String book_name, Integer currentPage) {
         String query = "select * from books where bookname like '%" + book_name + "%'";
-        return getBooks(query);
+        return getBooks(query, currentPage);
     }
 
-    public BooksPage findByPublisher(String publisher) {
+    public BooksPage findByPublisher(String publisher, Integer currentPage) {
         String query = "select * from books where publisher  like '%" + publisher + "%'";
-        return getBooks(query);
+        return getBooks(query,currentPage);
     }
 
     public Book findByISBM(String isbm) {
@@ -67,7 +67,7 @@ public class BookRepository {
 
     public BooksPage findByYear(LocalDate localDate) {
         String query = "select * from books where year_of_publication > '%" + localDate + "%'";
-        return getBooks(query);
+        return getBooks(query, null);
 
     }
 
@@ -79,25 +79,25 @@ public class BookRepository {
 
     public BooksPage findAll() {
         String query = "select * from books";
-        return getBooks(query);
+        return getBooks(query, null);
 
     }
 
     public BooksPage findByAllPage() {
         String query = "select * from books";
-        return getBooks(query);
+        return getBooks(query, null);
 
     }
 
-    private BooksPage getBooks(String query) {
+    private BooksPage getBooks(String query, Integer currentPage) {
         List<Book> books = new ArrayList<>();
         int pageSize = 10;
-        int currentPage = 1;
+        currentPage= currentPage==null?1:currentPage;
         int totalPages = 0;
         int totalCount = 0;
         try {
-            String count="select * from books";
-            ResultSet rs = st.executeQuery(count);
+
+            ResultSet rs = st.executeQuery(query);
           while (rs.next()){
               totalCount++;
           }

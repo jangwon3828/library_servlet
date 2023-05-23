@@ -19,22 +19,22 @@ public class PagingServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
-        int currentPage = Integer.parseInt(req.getParameter("currentPage"));
+        Integer currentPage = Integer.parseInt(req.getParameter("currentPage"));
         String search = req.getParameter("search");
         String searchData = req.getParameter("searchData");
         BooksPage books=null;
         switch (search) {
             case "전체":
-                books  = bookReadService.findByThreeWay(searchData);
+                books  = bookReadService.findByThreeWay(searchData,currentPage);
                 break;
             case "제목":
-                books  = bookReadService.findByBookName(searchData);
+                books  = bookReadService.findByBookName(searchData,currentPage);
                 break;
             case "저자":
-                books  = bookReadService.findByAuthor(searchData);
+                books  = bookReadService.findByAuthor(searchData,currentPage);
                 break;
             case "출판사":
-                books  = bookReadService.findByPublisher(searchData);
+                books  = bookReadService.findByPublisher(searchData,currentPage);
                 break;
         }
         books.changeCurrentPage(currentPage);

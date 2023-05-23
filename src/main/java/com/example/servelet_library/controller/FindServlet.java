@@ -10,8 +10,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 //컨트롤러 만들때 항상
 public class FindServlet extends HttpServlet {
@@ -26,16 +24,16 @@ public class FindServlet extends HttpServlet {
         BooksPage books=null;
         switch (search) {
             case "전체":
-                books  = bookReadService.findByThreeWay(searchData);
+                books  = bookReadService.findByThreeWay(searchData, null);
                 break;
             case "제목":
-                books  = bookReadService.findByBookName(searchData);
+                books  = bookReadService.findByBookName(searchData, null);
                 break;
             case "저자":
-                books  = bookReadService.findByAuthor(searchData);
+                books  = bookReadService.findByAuthor(searchData, null);
                 break;
             case "출판사":
-                books  = bookReadService.findByPublisher(searchData);
+                books  = bookReadService.findByPublisher(searchData, null);
                 break;
         }
         resp.setContentType("text/html;charset=utf-8");
