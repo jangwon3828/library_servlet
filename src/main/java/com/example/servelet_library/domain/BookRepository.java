@@ -31,7 +31,7 @@ public class BookRepository {
     }
 
     public List<Book> findByAuthor(String author) {
-        String query = "select * from books where author = '%" + author + "%'";
+        String query = "select * from books where author like '%" + author + "%'";
         return getBooks(query);
 
     }
@@ -42,12 +42,12 @@ public class BookRepository {
     }
 
     public List<Book> findByBookName(String book_name) {
-        String query = "select * from books where bookname = '%" + book_name + "%'";
+        String query = "select * from books where bookname like '%" + book_name + "%'";
         return getBooks(query);
     }
 
     public List<Book> findByPublisher(String publisher) {
-        String query = "select * from books where publisher  = '%" + publisher + "%'";
+        String query = "select * from books where publisher  like '%" + publisher + "%'";
         return getBooks(query);
     }
 
