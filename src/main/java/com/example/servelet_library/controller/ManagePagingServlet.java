@@ -99,7 +99,8 @@ public class ManagePagingServlet extends HttpServlet {
         pw.println("<th>잔여 권수</th>");
         pw.println("<th>누적 대여 횟수</th>");
         pw.println("<th>꽂혀있는 위치</th>");
-        pw.println("<th>대출</th>");//대출예약버튼 만약 0이라면 대출 불가능
+        pw.println("<th>수정</th>");//대출예약버튼 만약 0이라면 대출 불가능
+        pw.println("<th>삭제</th>");//대출예약버튼 만약 0이라면 대출 불가능
         pw.println("</tr>");
 
         for (Book book : books.getBooks()) {
@@ -112,8 +113,13 @@ public class ManagePagingServlet extends HttpServlet {
             pw.println("<td>" + book.getBorrow_count() + "</td>");
             pw.println("<td>" + book.getISBN_NO() + "</td>");
             pw.println("<form action=\"/library_servlet/checkout\" method=\"'get'\">");
-            pw.println("<input type = \"hidden\" name=\"book_id\" value=\""+book.getBook_id()+"\">");
-            pw.println("<td><button type=\"submit\">"+"대여</button></td>");
+            pw.println("<input type = \"hidden\" name=\"book_id\" value=\"" + book.getBook_id() + "\">");
+            pw.println("<td><button type=\"submit\">" + "수정</button></td>");
+            pw.println("</form>");
+            pw.println("<form action=\"/library_servlet/checkout\" method=\"'get'\">");
+            pw.println("<input type = \"hidden\" name=\"book_id\" value=\"" + book.getBook_id() + "\">");
+            pw.println("<td><button type=\"submit\">" + "삭제</button></td>");
+            pw.println("</form>");
             pw.println("</td>");
             pw.println("</tr>");
         }
@@ -144,7 +150,9 @@ public class ManagePagingServlet extends HttpServlet {
         pw.println("</div>");
 
         pw.println("<br>");
-        pw.println("<a class='back' href='/library_servlet'>메인페이지로 이동</a>");
+        pw.println("<div class='footer'>");
+        pw.println("<a class=\"back\" href='/library_servlet'>메인페이지로 이동</a>");
+        pw.println("</div>");
 
         pw.println("</body>");
         pw.println("</html>");

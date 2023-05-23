@@ -39,6 +39,9 @@ public class BookReadService {
     public  Book findByISBM(String book){
         return bookRepository.findByISBM(book);
     }
+    public  Book findById(Long id){
+        return bookRepository.findById(id);
+    }
 
     public  BooksPage findByYear(){
         LocalDate localDate = LocalDate.now();

@@ -116,8 +116,10 @@ public class FindRecommandServlet extends HttpServlet {
         }
 
         pw.println("</table>");
-        pw.println("<br>");
-        pw.println("<a href='/library_servlet'>메인페이지로 이동</a>");
+        pw.println("</br>");
+        pw.println("<div class='footer'>");
+        pw.println("<a class=\"back\" href='/library_servlet'>메인페이지로 이동</a>");
+        pw.println("</div>");
 
         pw.println("</body>");
         pw.println("</html>");
