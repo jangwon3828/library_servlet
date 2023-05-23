@@ -10,17 +10,16 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 //컨트롤러 만들때 항상
-public class FindServlet extends HttpServlet {
+public class PagingServlet extends HttpServlet {
 
     private final BookReadService bookReadService = BookReadService.getInstance();
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
+        int currentPage = Integer.parseInt(req.getParameter("currentPage"));
         String search = req.getParameter("search");
         String searchData = req.getParameter("searchData");
         BooksPage books=null;
@@ -38,6 +37,7 @@ public class FindServlet extends HttpServlet {
                 books  = bookReadService.findByPublisher(searchData);
                 break;
         }
+        books.changeCurrentPage(currentPage);
         resp.setContentType("text/html;charset=utf-8");
 
         PrintWriter pw = resp.getWriter();

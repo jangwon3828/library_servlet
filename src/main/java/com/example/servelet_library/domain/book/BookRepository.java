@@ -93,17 +93,24 @@ public class BookRepository {
         List<Book> books = new ArrayList<>();
         int pageSize = 10;
         int currentPage = 1;
-        String countQuery = "SELECT COUNT(*) FROM books";
         int totalPages = 0;
         int totalCount = 0;
-        int startRow = 0;
+        try {
+            String count="select * from books";
+            ResultSet rs = st.executeQuery(count);
+          while (rs.next()){
+              totalCount++;
+          }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        int startRow = (currentPage - 1) * pageSize;
         ResultSet resultSet=null;
         try {
+
             query += " LIMIT " + startRow + " , " + pageSize + " ;";
             resultSet = st.executeQuery(query);
-            resultSet.next();
-            totalCount = resultSet.getInt(1);
-            startRow = (currentPage - 1) * pageSize;
+
             totalPages = (int) Math.ceil((double) totalCount / pageSize);
 
         } catch (Exception e) {
@@ -131,8 +138,7 @@ public class BookRepository {
 
         }
 
-        BooksPage booksPage = new BooksPage(books, currentPage, pageSize, totalPages);
-        return booksPage;
+        return new BooksPage(books, currentPage, pageSize, totalPages);
     }
 
     private List<Book> getBookToList(String query) {

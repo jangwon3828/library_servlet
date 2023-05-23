@@ -48,4 +48,8 @@ public class BooksPage {
     public int getNextPage() {
         return currentPage + 1;
     }
+
+    public void changeCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
+    }
 }

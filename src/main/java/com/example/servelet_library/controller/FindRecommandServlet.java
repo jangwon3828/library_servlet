@@ -18,9 +18,9 @@ public class FindRecommandServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("euc-kr");
+        req.setCharacterEncoding("utf-8");
         List<Book> byTop10 = bookReadService.findByTop10();
-        resp.setContentType("text/html;charset=euc-kr");
+        resp.setContentType("text/html;charset=utf-8");
 
         PrintWriter pw = resp.getWriter();
         pw.println("<html>");
