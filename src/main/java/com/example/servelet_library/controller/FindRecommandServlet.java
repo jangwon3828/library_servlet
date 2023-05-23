@@ -1,8 +1,7 @@
 package com.example.servelet_library.controller;
 
-import com.example.servelet_library.domain.Book;
-import com.example.servelet_library.domain.BookRepository;
-import com.example.servelet_library.service.BookReadService;
+import com.example.servelet_library.domain.book.Book;
+import com.example.servelet_library.service.book.BookReadService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 //컨트롤러 만들때 항상
@@ -58,7 +56,6 @@ public class FindRecommandServlet extends HttpServlet {
         pw.println("<th>꽂혀있는 위치</th>");
         pw.println("<th>책고유값</th>");//대출예약버튼
         pw.println("</tr>");
-
 
 
         for (Book book : byTop10) {

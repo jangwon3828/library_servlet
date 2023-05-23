@@ -1,7 +1,6 @@
-package com.example.servelet_library.domain;
+package com.example.servelet_library.domain.book;
 
-import com.example.servelet_library.service.BookReadService;
-import jakarta.servlet.ServletContext;
+import com.example.servelet_library.domain.user.UserRepository;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -12,9 +11,10 @@ import java.util.List;
 
 public class BookRepository {
     private static BookRepository bookRepository = new BookRepository();
-    private Connection con;
-    private Statement st;
+    private static Connection con;
+    public static Statement st;
 
+    private UserRepository userRepository=UserRepository.getInstance();
     private BookRepository() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -40,7 +40,10 @@ public class BookRepository {
         return getBooks(query);
 
     }
-
+    public Book findById(Long id) {
+        String query = "select * from books where book_id = '" + id + "'";
+        return getBook(query);
+    }
     public List<Book> findByBookName(String book_name) {
         String query = "select * from books where bookname like '%" + book_name + "%'";
         return getBooks(query);
@@ -65,9 +68,18 @@ public class BookRepository {
 
     private List<Book> getBooks(String query) {
         List<Book> books = new ArrayList<>();
+        int pageSize = 10;
+        int currentPage = 1;
+        String countQuery = "SELECT COUNT(*) FROM your_table";
+        int totalPages=0;
         try {
+            ResultSet resultSet = st.executeQuery(countQuery);
+            resultSet.next();
+            int totalCount = resultSet.getInt(1);
+            int startRow = (currentPage - 1) * pageSize;
+            totalPages = (int) Math.ceil((double) totalCount / pageSize);
+            query=query+ "LIMIT"+startRow+","+pageSize+";";
             ResultSet rs = st.executeQuery(query);
-
             while (rs.next()) {
                 String str = rs.getString("year_of_publication");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -134,13 +146,15 @@ public class BookRepository {
         }
     }
   
-     public void checkoutBook(Long book_id) {
+     public void checkoutBook(Long book_id,Long user_id) {
         int bookId= Math.toIntExact(book_id);
-        String query = "update books set borrowcount = borrowcount +1 , count = count-1 where book_id= " + bookId  ;
+        int userId= Math.toIntExact(user_id);
+        String query = "update books set borrowcount = borrowcount +1 , count = count-1 where book_id= " + bookId;
+
         try {
             st.execute(query);
-
-
+            query="update users set book_id= "+bookId+" where user_id = "+userId;
+            st.execute(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -26,7 +26,7 @@
 
     <servlet>
         <servlet-name>application</servlet-name>
-        <servlet-class>com.example.servelet_library.controller.applicationServlet</servlet-class>
+        <servlet-class>com.example.servelet_library.controller.ApplicationServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>application</servlet-name>

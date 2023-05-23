@@ -16,7 +16,7 @@ public class ApplicationServlet extends HttpServlet{
 
         // TODO user 생성 시 해당 유저 서재에 신청한 도서 목록이 뜨게끔 만들기
 //		request.getParameter("name");
-//		request.getParameter("author");
+//		request.getParameter("`author");
 //		request.getParameter("publisher");
         resp.setContentType("text/html; charset=utf-8");
 

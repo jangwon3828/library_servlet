@@ -1,10 +1,9 @@
-package com.example.servelet_library.service;
+package com.example.servelet_library.service.book;
 
 
-import com.example.servelet_library.domain.Book;
-import com.example.servelet_library.domain.BookRepository;
+import com.example.servelet_library.domain.book.Book;
+import com.example.servelet_library.domain.book.BookRepository;
 
-import java.sql.DriverManager;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;

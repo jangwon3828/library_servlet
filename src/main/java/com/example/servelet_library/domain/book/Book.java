@@ -1,4 +1,4 @@
-package com.example.servelet_library.domain;
+package com.example.servelet_library.domain.book;
 
 
 import java.time.LocalDate;

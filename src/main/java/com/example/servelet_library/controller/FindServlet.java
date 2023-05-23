@@ -1,7 +1,7 @@
 package com.example.servelet_library.controller;
 
-import com.example.servelet_library.domain.Book;
-import com.example.servelet_library.service.BookReadService;
+import com.example.servelet_library.domain.book.Book;
+import com.example.servelet_library.service.book.BookReadService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
