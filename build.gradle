@@ -23,6 +23,7 @@ tasks.withType(JavaCompile) {
 
 dependencies {
     compileOnly('jakarta.platform:jakarta.jakartaee-web-api:9.1.0')
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.26'
 }
 
 test {

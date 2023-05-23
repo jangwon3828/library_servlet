@@ -16,11 +16,11 @@
     </welcome-file-list>
     <!--서블릿 연결해주는 코드 우리는 어노테이션 안쓰고 여기서 연동해줄거임-->
     <servlet>
-        <servlet-name>library</servlet-name>
-        <servlet-class>com.example.servelet_library.controller.LibraryController</servlet-class>
+        <servlet-name>findServlet</servlet-name>
+        <servlet-class>com.example.servelet_library.controller.findServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>library</servlet-name>
-        <url-pattern>/updateok</url-pattern>
+        <servlet-name>findServlet</servlet-name>
+        <url-pattern>/find</url-pattern>
     </servlet-mapping>
 </web-app>
