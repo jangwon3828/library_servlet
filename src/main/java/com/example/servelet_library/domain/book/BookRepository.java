@@ -1,5 +1,6 @@
 package com.example.servelet_library.domain.book;
 
+import com.example.servelet_library.domain.dto.BooksPage;
 import com.example.servelet_library.domain.user.UserRepository;
 
 import java.sql.*;
@@ -30,12 +31,12 @@ public class BookRepository {
         return bookRepository;
     }
 
-    public List<Book> findByAuthor(String author) {
+    public BooksPage findByAuthor(String author) {
         String query = "select * from books where author like '%" + author + "%'";
         return getBooks(query);
 
     }
-    public List<Book> findByThreeWay(String data) {
+    public BooksPage findByThreeWay(String data) {
         String query = "select * from books where author like '%" + data + "%' or bookname like '%" + data + "%' or publisher like '%"+ data + "%'";;
         return getBooks(query);
 
@@ -44,17 +45,17 @@ public class BookRepository {
         String query = "select * from books where book_id = '" + id + "'";
         return getBook(query);
     }
-    public List<Book> findByBookName(String book_name) {
+    public BooksPage findByBookName(String book_name) {
         String query = "select * from books where bookname like '%" + book_name + "%'";
         return getBooks(query);
     }
 
-    public List<Book> findByPublisher(String publisher) {
+    public BooksPage findByPublisher(String publisher) {
         String query = "select * from books where publisher  like '%" + publisher + "%'";
         return getBooks(query);
     }
 
-    public List<Book> findByYear(LocalDate localDate) {
+    public BooksPage findByYear(LocalDate localDate) {
         String query = "select * from books where year_of_publication > '%" + localDate + "%'";
         return getBooks(query);
 
@@ -62,24 +63,66 @@ public class BookRepository {
 
     public List<Book> findByAll() {
         String query = "select * from books";
+        return getBookToList(query);
+
+    }
+
+    public BooksPage findByAllPage() {
+        String query = "select * from books";
         return getBooks(query);
 
     }
 
-    private List<Book> getBooks(String query) {
+    private BooksPage getBooks(String query) {
         List<Book> books = new ArrayList<>();
         int pageSize = 10;
         int currentPage = 1;
-        String countQuery = "SELECT COUNT(*) FROM your_table";
+        String countQuery = "SELECT COUNT(*) FROM books";
         int totalPages=0;
+        int totalCount=0;
+        int startRow=0;
         try {
             ResultSet resultSet = st.executeQuery(countQuery);
             resultSet.next();
-            int totalCount = resultSet.getInt(1);
-            int startRow = (currentPage - 1) * pageSize;
+            totalCount = resultSet.getInt(1);
+            startRow = (currentPage - 1) * pageSize;
             totalPages = (int) Math.ceil((double) totalCount / pageSize);
-            query=query+ "LIMIT"+startRow+","+pageSize+";";
+
+        } catch (Exception e) {
+            System.out.println("에러발생 findByAuthor");
+        }
+        try {
+            query+= " LIMIT "+startRow+" , "+pageSize+" ;";
             ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                String str = rs.getString("year_of_publication");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String[] s = str.split(" ");
+                LocalDate dateTime = LocalDate.parse(s[0], formatter);
+                Book book = new Book(Long.parseLong(rs.getString("book_id")),
+                        rs.getString("bookname"),
+                        rs.getString("author"),
+                        rs.getString("publisher"),
+                        Long.parseLong(rs.getString("borrowcount")),
+                        rs.getString("ISBN_NO"),
+                        dateTime,
+                        Long.parseLong(rs.getString("count"))
+                );
+                books.add(book);
+            }
+        }catch (Exception e){
+
+        }
+
+        BooksPage booksPage = new BooksPage(books, currentPage,pageSize,totalPages);
+        return booksPage;
+    }
+
+    private List<Book> getBookToList(String query) {
+        List<Book> books = new ArrayList<>();
+        try {
+            ResultSet rs = st.executeQuery(query);
+
             while (rs.next()) {
                 String str = rs.getString("year_of_publication");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

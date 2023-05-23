@@ -1,6 +1,7 @@
 package com.example.servelet_library.controller;
 
 import com.example.servelet_library.domain.book.Book;
+import com.example.servelet_library.domain.dto.BooksPage;
 import com.example.servelet_library.service.book.BookReadService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -22,7 +23,7 @@ public class FindServlet extends HttpServlet {
         req.setCharacterEncoding("euc-kr");
         String search = req.getParameter("search");
         String searchData = req.getParameter("searchData");
-        List<Book> books=new ArrayList<>();
+        BooksPage books=null;
         switch (search) {
             case "전체":
                 books  = bookReadService.findByThreeWay(searchData);
@@ -57,7 +58,6 @@ public class FindServlet extends HttpServlet {
         pw.println("  background-color: #f2f2f2;");
         pw.println("}");
         pw.println("</style>");
-
         pw.println("</head>");
         pw.println("<body>");
 
@@ -74,9 +74,7 @@ public class FindServlet extends HttpServlet {
         pw.println("<th>책고유값</th>");//대출예약버튼 만약 0이라면 대출 불가능
         pw.println("</tr>");
 
-
-
-        for (Book book : books) {
+        for (Book book : books.getBooks()) {
             pw.println("<tr>");
             pw.println("<td>" + book.getBook_name() + "</td>");
             pw.println("<td>" + book.getAuthor() + "</td>");
@@ -90,12 +88,37 @@ public class FindServlet extends HttpServlet {
         }
 
         pw.println("</table>");
+
+// 페이징 링크 생성
+        pw.println("<div>");
+
+// 이전 페이지 링크
+        if(books.hasPreviousPage()) {
+            pw.println("<a href=\"/paging?currentPage=" + books.getPreviousPage() + "&search=" + search + "&searchData=" + searchData + "\">이전</a>");
+        }
+
+// 페이지 번호 링크
+        for (int i = 1; i <= books.getTotalPages(); i++) {
+            if (i == books.getCurrentPage()) {
+                pw.println("<strong>" + i + "</strong>");
+            } else {
+                pw.println("<a href=\"/paging?currentPage=" + i + "&search=" + search + "&searchData=" + searchData + "\">" + i + "</a>");
+            }
+        }
+
+// 다음 페이지 링크
+        if (books.hasNextPage()) {
+            pw.println("<a href=\"/paging?currentPage=" + books.getNextPage() + "&search=" + search + "&searchData=" + searchData + "\">다음</a>");
+        }
+
+        pw.println("</div>");
+
         pw.println("<br>");
         pw.println("<a href='/library_servlet'>메인페이지로 이동</a>");
 
         pw.println("</body>");
         pw.println("</html>");
 
-
+        pw.close();
     }
 }
