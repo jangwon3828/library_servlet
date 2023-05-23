@@ -26,11 +26,11 @@
 
     <servlet>
         <servlet-name>application</servlet-name>
-        <servlet-class>com.example.servelet_library.controller.applicationServlet</servlet-class>
+        <servlet-class>com.example.servelet_library.controller.ApplicationServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>application</servlet-name>
-        <url-pattern>/application</url-pattern>
+        <url-pattern>/Application</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>findRecommandServlet</servlet-name>
@@ -39,5 +39,30 @@
     <servlet-mapping>
         <servlet-name>findRecommandServlet</servlet-name>
         <url-pattern>/findRecommandServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>pagingServlet</servlet-name>
+        <servlet-class>com.example.servelet_library.controller.PagingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>pagingServlet</servlet-name>
+        <url-pattern>/paging</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>manage</servlet-name>
+        <servlet-class>com.example.servelet_library.controller.ManageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>manage</servlet-name>
+        <url-pattern>/manage</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>managePagingServlet</servlet-name>
+        <servlet-class>com.example.servelet_library.controller.ManagePagingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>managePagingServlet</servlet-name>
+        <url-pattern>/manage_paging</url-pattern>
     </servlet-mapping>
 </web-app>

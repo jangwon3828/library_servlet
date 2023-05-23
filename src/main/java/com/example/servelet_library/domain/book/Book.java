@@ -1,10 +1,25 @@
-package com.example.servelet_library.domain;
+package com.example.servelet_library.domain.book;
 
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Book implements Comparable<Book>{
     private Long book_id;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return Objects.equals(book_name, book.book_name) && Objects.equals(author, book.author) && Objects.equals(publisher, book.publisher) && Objects.equals(borrow_count, book.borrow_count) && Objects.equals(ISBN_NO, book.ISBN_NO) && Objects.equals(year_of_publication, book.year_of_publication) && Objects.equals(count, book.count);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(book_id, book_name, author, publisher, borrow_count, ISBN_NO, year_of_publication, count);
+    }
+
     private String book_name;
     private String author;
     private String publisher;
@@ -84,8 +99,8 @@ public class Book implements Comparable<Book>{
         this.year_of_publication = year_of_publication;
     }
 
-    public void updateCount(Long count) {
-        this.count = count;
+    public void updateCount() {
+        this.count++;
     }
 
     @Override

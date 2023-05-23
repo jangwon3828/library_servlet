@@ -12,30 +12,32 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 //컨트롤러 만들때 항상
-public class FindServlet extends HttpServlet {
+public class PagingServlet extends HttpServlet {
 
     private final BookReadService bookReadService = BookReadService.getInstance();
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
+        Integer currentPage = Integer.parseInt(req.getParameter("currentPage"));
         String search = req.getParameter("search");
         String searchData = req.getParameter("searchData");
-        BooksPage books=null;
+        BooksPage books = null;
         switch (search) {
             case "전체":
-                books  = bookReadService.findByThreeWay(searchData, null);
+                books = bookReadService.findByThreeWay(searchData, currentPage);
                 break;
             case "제목":
-                books  = bookReadService.findByBookName(searchData, null);
+                books = bookReadService.findByBookName(searchData, currentPage);
                 break;
             case "저자":
-                books  = bookReadService.findByAuthor(searchData, null);
+                books = bookReadService.findByAuthor(searchData, currentPage);
                 break;
             case "출판사":
-                books  = bookReadService.findByPublisher(searchData, null);
+                books = bookReadService.findByPublisher(searchData, currentPage);
                 break;
         }
+        books.changeCurrentPage(currentPage);
         resp.setContentType("text/html;charset=utf-8");
 
         PrintWriter pw = resp.getWriter();
@@ -110,7 +112,7 @@ public class FindServlet extends HttpServlet {
                 "</style>");
         pw.println("</head>");
         pw.println("<body>");
-        pw.println("<div class=\"container\">");
+        pw.println("<div class='container'>");
         pw.println("<h1>책 목록</h1>");
         pw.println("<table>");
         pw.println("<tr>");
@@ -136,7 +138,6 @@ public class FindServlet extends HttpServlet {
             pw.println("<form action=\"/library_servlet/checkout\" method=\"'get'\">");
             pw.println("<input type = \"hidden\" name=\"book_id\" value=\"" + book.getBook_id() + "\">");
             pw.println("<td><button type=\"submit\">" + "대여</button></td>");
-            pw.println("</form>");
             pw.println("</td>");
             pw.println("</tr>");
         }
@@ -147,7 +148,7 @@ public class FindServlet extends HttpServlet {
 
 // 이전 페이지 링크
         if (books.hasPreviousPage()) {
-            pw.println("<a class=\"paging\" href=\"/library_servlet/paging?currentPage=" + books.getPreviousPage() + "&search=" + search + "&searchData=" + searchData + "\">이전</a>");
+            pw.println("<a class='paging' href=\"/library_servlet/paging?currentPage=" + books.getPreviousPage() + "&search=" + search + "&searchData=" + searchData + "\">이전</a>");
         }
 
 // 페이지 번호 링크
@@ -155,21 +156,20 @@ public class FindServlet extends HttpServlet {
             if (i == books.getCurrentPage()) {
                 pw.println("<strong>" + i + "</strong>");
             } else {
-                pw.println("<a class=\"paging\" href=\"/library_servlet/paging?currentPage=" + i + "&search=" + search + "&searchData=" + searchData + "\">" + i + "</a>");
+                pw.println("<a class='paging' href=\"/library_servlet/paging?currentPage=" + i + "&search=" + search + "&searchData=" + searchData + "\">" + i + "</a>");
             }
         }
 // 다음 페이지 링크
         if (books.hasNextPage()) {
-            pw.println("<a class=\"paging\" href=\"/library_servlet/paging?currentPage=" + books.getNextPage() + "&search=" + search + "&searchData=" + searchData + "\">다음</a>");
+            pw.println("<a class='paging' href=\"/library_servlet/paging?currentPage=" + books.getNextPage() + "&search=" + search + "&searchData=" + searchData + "\">다음</a>");
         }
 
         pw.println("</div>");
         pw.println("</div>");
 
         pw.println("<div class='footer'>");
-        pw.println("<a class=\"back\" href='/library_servlet'>메인페이지로 이동</a>");
+        pw.println("<a class='back' href='/library_servlet'>메인페이지로 이동</a>");
         pw.println("</div>");
-
         pw.println("</body>");
         pw.println("</html>");
 
