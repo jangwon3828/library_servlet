@@ -10,42 +10,49 @@ import java.util.List;
 
 
 public class BookRepository {
-    private static Connection con;
-    private static Statement st;
+    private static BookRepository bookRepository = new BookRepository();
+    private Connection con;
+    private Statement st;
 
-    private static BookRepository bookRepository =new BookRepository();
 
-    private  BookRepository(){
+    private BookRepository() {
         try {
+            Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library?serverTimezon=UTC", "root", "1234");
             st = con.createStatement();
-            System.out.println("데이터 베이스와 연결이 성공적으로 되었습니다");
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public static BookRepository getInstance(){
+
+
+    public static BookRepository getInstance() {
         return bookRepository;
     }
 
     public List<Book> findByAuthor(String author) {
-        String query = "select * from books where author = '" + author + "'";
+        String query = "select * from books where author = '%" + author + "%'";
+        return getBooks(query);
+
+    }
+    public List<Book> findByThreeWay(String data) {
+        String query = "select * from books where author like '%" + data + "%' or bookname like '%" + data + "%' or publisher like '%"+ data + "%'";;
         return getBooks(query);
 
     }
 
     public List<Book> findByBookName(String book_name) {
-        String query = "select * from books where bookname = '" + book_name + "'";
+        String query = "select * from books where bookname = '%" + book_name + "%'";
         return getBooks(query);
     }
 
     public List<Book> findByPublisher(String publisher) {
-        String query = "select * from books where publisher  = '" + publisher + "'";
+        String query = "select * from books where publisher  = '%" + publisher + "%'";
         return getBooks(query);
     }
 
     public List<Book> findByYear(LocalDate localDate) {
-        String query = "select * from books where year_of_publication > '" + localDate + "'";
+        String query = "select * from books where year_of_publication > '%" + localDate + "%'";
         return getBooks(query);
 
     }
