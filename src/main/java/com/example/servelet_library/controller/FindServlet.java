@@ -42,20 +42,63 @@ public class FindServlet extends HttpServlet {
         pw.println("<html>");
         pw.println("<head>");
         pw.println("<title>책목록</title>");
-        pw.println("<style>");
-        pw.println("table {");
-        pw.println("  border-collapse: collapse;");
-        pw.println("  width: 100%;");
-        pw.println("}");
-        pw.println("th, td {");
-        pw.println("  border: 1px solid black;");
-        pw.println("  padding: 8px;");
-        pw.println("  text-align: left;");
-        pw.println("}");
-        pw.println("tr:nth-child(even) {");
-        pw.println("  background-color: #f2f2f2;");
-        pw.println("}");
-        pw.println("</style>");
+        pw.println("<style>" +
+                "        @import url('https://fonts.googleapis.com/css2?family=Hahmlet&display=swap');\n" +
+                "html,body{\n" +
+                "      background-color: #05507D;\n" +
+                "      heigth:100%;\n" +
+                "      width:100%;\n" +
+                "      padding:0;\n" +
+                "      margin:0;\n" +
+                "      font-family: 'Hahmlet', sans-serif;\n" +
+                "    }\n" +
+                "    .container {\n" +
+                "      background-color: white;\n" +
+                "      display: flex;\n" +
+                "      justify-content: space-between;\n" +
+                "      align-items: center;\n" +
+                "      flex-direction: column;\n" +
+                "      height: 90vh;\n" +
+                "      margin-top: 5vh\n" +
+                "    }" +
+                ".paging {\n" +
+                "  display: inline-block;\n" +
+                "  padding: 5px 7px;\n" +
+                "margin-bottom: 15px;\n" +
+                "  font-size: 14px;\n" +
+                "  font-weight: bold;\n" +
+                "  text-align: center;\n" +
+                "  text-decoration: none;\n" +
+                "  background-color: #05507D;\n" +
+                "  color: white;\n" +
+                "  border-radius: 4px;\n" +
+                "  border: none;\n" +
+                "  cursor: pointer;\n" +
+                "}" +
+                ".paging:hover {\n" +
+                "  background-color: #00A5E5;\n" +
+                "}\n" +
+                "table {\n" +
+                "  border-collapse: collapse;\n" +
+                "  width: 100%;\n" +
+                "}\n" +
+                "\n" +
+                "th, td {\n" +
+                "  padding: 8px;\n" +
+                "  text-align: left;\n" +
+                "  border-bottom: 1px solid #ddd;\n" +
+                "}\n" +
+                "\n" +
+                "th {\n" +
+                "  background-color: #f2f2f2;\n" +
+                "  font-weight: bold;\n" +
+                "}\n" +
+                "\n" +
+                "tr:nth-child(even) {\n" +
+                "  background-color: #f9f9f9;\n" +
+                "}" +
+
+                "</style>");
         pw.println("</head>");
         pw.println("<body>");
 
