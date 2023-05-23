@@ -23,4 +23,12 @@
         <servlet-name>findServlet</servlet-name>
         <url-pattern>/find</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>application</servlet-name>
+        <servlet-class>Pack.controller.ApplicationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>application</servlet-name>
+        <url-pattern>/application</url-pattern>
+    </servlet-mapping>
 </web-app>
