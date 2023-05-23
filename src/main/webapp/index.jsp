@@ -2,12 +2,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <meta charset="UTF-8">
+    <title>도서관</title>
 </head>
 <body>
-<h1><%= "Hello World!" %>
-</h1>
-<br/>
-<a href="hello-servlet">Hello Servlet</a>
+<div>
+    <button type="button" onclick="location.href='/library_servlet/html/findbook.html'">도서 검색</button>
+    <button>추천 도서</button>
+    <button type="button" onclick="location.href='/library_servlet/html/application.html'">도서 신청</button>
+</div>
 </body>
 </html>

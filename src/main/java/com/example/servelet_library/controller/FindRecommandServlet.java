@@ -10,34 +10,18 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 //컨트롤러 만들때 항상
-public class findServlet extends HttpServlet {
+public class FindRecommandServlet extends HttpServlet {
 
     private final BookRepository bookRepository = BookRepository.getInstance();
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("euc-kr");
-        String search = req.getParameter("search");
-        String searchData = req.getParameter("searchData");
         List<Book> books=new ArrayList<>();
-        switch (search) {
-            case "전체":
-                books  = bookRepository.findByThreeWay(searchData);
-                break;
-            case "제목":
-                books  = bookRepository.findByBookName(searchData);
-                break;
-            case "저자":
-                books  = bookRepository.findByAuthor(searchData);
-                break;
-            case "출판사":
-                books  = bookRepository.findByPublisher(searchData);
-                break;
-        }
+
         resp.setContentType("text/html;charset=euc-kr");
 
         PrintWriter pw = resp.getWriter();

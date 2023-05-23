@@ -17,7 +17,7 @@
     <!--서블릿 연결해주는 코드 우리는 어노테이션 안쓰고 여기서 연동해줄거임-->
     <servlet>
         <servlet-name>findServlet</servlet-name>
-        <servlet-class>com.example.servelet_library.controller.findServlet</servlet-class>
+        <servlet-class>com.example.servelet_library.controller.FindServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>findServlet</servlet-name>
