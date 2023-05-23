@@ -98,7 +98,15 @@ public class FindServlet extends HttpServlet {
                 "tr:nth-child(even) {\n" +
                 "  background-color: #f9f9f9;\n" +
                 "}" +
-
+                ".back{\n" +
+                "color:white;\n" +
+                "text-decoration:none;" +
+                "}" +
+                ".footer{\n" +
+                "text-align:right;\n" +
+                "margin-top: 10px;\n" +
+                "margin-right: 10px;\n" +
+                "}" +
                 "</style>");
         pw.println("</head>");
         pw.println("<body>");
@@ -160,8 +168,9 @@ public class FindServlet extends HttpServlet {
         pw.println("</div>");
         pw.println("</div>");
 
-        pw.println("<br>");
+        pw.println("<div class='footer'>");
         pw.println("<a class=\"back\" href='/library_servlet'>메인페이지로 이동</a>");
+        pw.println("</div>");
 
         pw.println("</body>");
         pw.println("</html>");

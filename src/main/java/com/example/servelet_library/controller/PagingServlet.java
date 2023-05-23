@@ -22,19 +22,19 @@ public class PagingServlet extends HttpServlet {
         Integer currentPage = Integer.parseInt(req.getParameter("currentPage"));
         String search = req.getParameter("search");
         String searchData = req.getParameter("searchData");
-        BooksPage books=null;
+        BooksPage books = null;
         switch (search) {
             case "전체":
-                books  = bookReadService.findByThreeWay(searchData,currentPage);
+                books = bookReadService.findByThreeWay(searchData, currentPage);
                 break;
             case "제목":
-                books  = bookReadService.findByBookName(searchData,currentPage);
+                books = bookReadService.findByBookName(searchData, currentPage);
                 break;
             case "저자":
-                books  = bookReadService.findByAuthor(searchData,currentPage);
+                books = bookReadService.findByAuthor(searchData, currentPage);
                 break;
             case "출판사":
-                books  = bookReadService.findByPublisher(searchData,currentPage);
+                books = bookReadService.findByPublisher(searchData, currentPage);
                 break;
         }
         books.changeCurrentPage(currentPage);
@@ -100,7 +100,15 @@ public class PagingServlet extends HttpServlet {
                 "tr:nth-child(even) {\n" +
                 "  background-color: #f9f9f9;\n" +
                 "}" +
-
+                ".back{\n" +
+                "color:white;\n" +
+                "text-decoration:none;" +
+                "}" +
+                ".footer{\n" +
+                "text-align:right;\n" +
+                "margin-top: 10px;\n" +
+                "margin-right: 10px;\n" +
+                "}" +
                 "</style>");
         pw.println("</head>");
         pw.println("<body>");
@@ -128,8 +136,8 @@ public class PagingServlet extends HttpServlet {
             pw.println("<td>" + book.getBorrow_count() + "</td>");
             pw.println("<td>" + book.getISBN_NO() + "</td>");
             pw.println("<form action=\"/library_servlet/checkout\" method=\"'get'\">");
-            pw.println("<input type = \"hidden\" name=\"book_id\" value=\""+book.getBook_id()+"\">");
-            pw.println("<td><button type=\"submit\">"+"대여</button></td>");
+            pw.println("<input type = \"hidden\" name=\"book_id\" value=\"" + book.getBook_id() + "\">");
+            pw.println("<td><button type=\"submit\">" + "대여</button></td>");
             pw.println("</td>");
             pw.println("</tr>");
         }
@@ -159,9 +167,9 @@ public class PagingServlet extends HttpServlet {
         pw.println("</div>");
         pw.println("</div>");
 
-        pw.println("<br>");
+        pw.println("<div class='footer'>");
         pw.println("<a class='back' href='/library_servlet'>메인페이지로 이동</a>");
-
+        pw.println("</div>");
         pw.println("</body>");
         pw.println("</html>");
 
