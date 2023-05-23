@@ -91,7 +91,7 @@ public class FindServlet extends HttpServlet {
 
         pw.println("</table>");
         pw.println("<br>");
-        pw.println("<a href='/'>메인페이지로 이동</a>");
+        pw.println("<a href='/library_servlet'>메인페이지로 이동</a>");
 
         pw.println("</body>");
         pw.println("</html>");
