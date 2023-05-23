@@ -1,6 +1,7 @@
 package com.example.servelet_library.domain;
 
 import com.example.servelet_library.service.BookReadService;
+import jakarta.servlet.ServletContext;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -13,7 +14,6 @@ public class BookRepository {
     private static BookRepository bookRepository = new BookRepository();
     private Connection con;
     private Statement st;
-
 
     private BookRepository() {
         try {
