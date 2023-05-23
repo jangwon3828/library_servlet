@@ -8,8 +8,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class applicationServlet extends HttpServlet{
-    public applicationServlet() {
+public class ApplicationServlet extends HttpServlet{
+    public ApplicationServlet() {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
