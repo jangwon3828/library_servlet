@@ -25,7 +25,7 @@ public class FindRecommandServlet extends HttpServlet {
         PrintWriter pw = resp.getWriter();
         pw.println("<html>");
         pw.println("<head>");
-        pw.println("<title>책목록</title>");
+        pw.println("<title>우리 도서관 TOP10</title>");
         pw.println("<style>" +
                 "        @import url('https://fonts.googleapis.com/css2?family=Hahmlet&display=swap');\n" +
                 "html,body{\n" +
@@ -39,29 +39,12 @@ public class FindRecommandServlet extends HttpServlet {
                 "    .container {\n" +
                 "      background-color: white;\n" +
                 "      display: flex;\n" +
-                "      justify-content: space-between;\n" +
+                "      justify-content: space-around;\n" +
                 "      align-items: center;\n" +
                 "      flex-direction: column;\n" +
                 "      height: 90vh;\n" +
                 "      margin-top: 5vh\n" +
                 "    }" +
-                ".paging {\n" +
-                "  display: inline-block;\n" +
-                "  padding: 5px 7px;\n" +
-                "margin-bottom: 15px;\n" +
-                "  font-size: 14px;\n" +
-                "  font-weight: bold;\n" +
-                "  text-align: center;\n" +
-                "  text-decoration: none;\n" +
-                "  background-color: #05507D;\n" +
-                "  color: white;\n" +
-                "  border-radius: 4px;\n" +
-                "  border: none;\n" +
-                "  cursor: pointer;\n" +
-                "}" +
-                ".paging:hover {\n" +
-                "  background-color: #00A5E5;\n" +
-                "}\n" +
                 "table {\n" +
                 "  border-collapse: collapse;\n" +
                 "  width: 85vh;\n" +
@@ -82,13 +65,20 @@ public class FindRecommandServlet extends HttpServlet {
                 "tr:nth-child(even) {\n" +
                 "  background-color: #f9f9f9;\n" +
                 "}" +
-
+                ".back{\n" +
+                "color:white;\n" +
+                "text-decoration:none;" +
+                "}" +
+                ".footer{\n" +
+                "text-align:right;\n" +
+                "margin-top: 10px;\n" +
+                "margin-right: 10px;\n" +
+                "}" +
                 "</style>");
         pw.println("</head>");
         pw.println("<body>");
         pw.println("<div class=\"container\">");
-
-        pw.println("<h1>책 목록</h1>");
+        pw.println("<h1>우리 도서관 TOP10</h1>");
         pw.println("<table>");
         pw.println("<tr>");
         pw.println("<th>책 제목</th>");
@@ -96,12 +86,9 @@ public class FindRecommandServlet extends HttpServlet {
         pw.println("<th>출판사</th>");
         pw.println("<th>출판일자</th>");
         pw.println("<th>잔여 권수</th>");
-        pw.println("<th>여태까지 대여횟수</th>"); //대출가능 여부로 변경해야함
+        pw.println("<th>누적 대여 횟수</th>"); //대출가능 여부로 변경해야함
         pw.println("<th>꽂혀있는 위치</th>");
-        pw.println("<th>책고유값</th>");//대출예약버튼
         pw.println("</tr>");
-
-
         for (Book book : byTop10) {
             pw.println("<tr>");
             pw.println("<td>" + book.getBook_name() + "</td>");
@@ -111,13 +98,14 @@ public class FindRecommandServlet extends HttpServlet {
             pw.println("<td>" + book.getCount() + "</td>");
             pw.println("<td>" + book.getBorrow_count() + "</td>");
             pw.println("<td>" + book.getISBN_NO() + "</td>");
-            pw.println("<td>" + book.getBook_id() + "</td>");
             pw.println("</tr>");
         }
-
         pw.println("</table>");
-        pw.println("<br>");
-        pw.println("<a href='/library_servlet'>메인페이지로 이동</a>");
+
+        pw.println("</div>");
+        pw.println("<div class='footer'>");
+        pw.println("<a class=\"back\" href='/library_servlet'>메인페이지로 이동</a>");
+        pw.println("</div>");
 
         pw.println("</body>");
         pw.println("</html>");
