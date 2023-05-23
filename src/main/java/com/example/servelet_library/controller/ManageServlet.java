@@ -115,7 +115,7 @@ public class ManageServlet extends HttpServlet {
             pw.println("<input type = \"hidden\" name=\"book_id\" value=\"" + book.getBook_id() + "\">");
             pw.println("<td><button type=\"submit\">" + "수정</button></td>");
             pw.println("</form>");
-            pw.println("<form action=\"/library_servlet/checkout\" method=\"'get'\">");
+            pw.println("<form action=\"/library_servlet/delete\" method=\"'post'\">");
             pw.println("<input type = \"hidden\" name=\"book_id\" value=\"" + book.getBook_id() + "\">");
             pw.println("<td><button type=\"submit\">" + "삭제</button></td>");
             pw.println("</form>");

@@ -24,6 +24,9 @@ public class BookWriteService {
     public void plusBook(Book book){
         bookRepository.plusBook(book);
     }
+    public void deleteBook(Long book){
+        bookRepository.deleteBook(book);
+    }
 
     public void updateBook(Book book){
         bookRepository.updateBook(book);
