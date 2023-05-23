@@ -30,7 +30,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>application</servlet-name>
-        <url-pattern>/application</url-pattern>
+        <url-pattern>/Application</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>findRecommandServlet</servlet-name>

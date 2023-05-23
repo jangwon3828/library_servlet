@@ -37,6 +37,9 @@ public class BookReadService {
     public  BooksPage findByPublisher(String book){
         return bookRepository.findByPublisher(book);
     }
+    public  Book findByISBM(String book){
+        return bookRepository.findByISBM(book);
+    }
 
     public  BooksPage findByYear(){
         LocalDate localDate = LocalDate.now();
@@ -54,4 +57,7 @@ public class BookReadService {
             bookRepository.deleteBook(book_id);
     }
 
+    public BooksPage findAll() {
+        return bookRepository.findAll();
+    }
 }

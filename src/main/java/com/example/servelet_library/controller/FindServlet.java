@@ -88,12 +88,11 @@ public class FindServlet extends HttpServlet {
         }
 
         pw.println("</table>");
-
 // 페이징 링크 생성
         pw.println("<div>");
 
 // 이전 페이지 링크
-        if(books.hasPreviousPage()) {
+        if (books.hasPreviousPage()) {
             pw.println("<a href=\"/paging?currentPage=" + books.getPreviousPage() + "&search=" + search + "&searchData=" + searchData + "\">이전</a>");
         }
 
@@ -105,12 +104,12 @@ public class FindServlet extends HttpServlet {
                 pw.println("<a href=\"/paging?currentPage=" + i + "&search=" + search + "&searchData=" + searchData + "\">" + i + "</a>");
             }
         }
-
 // 다음 페이지 링크
         if (books.hasNextPage()) {
             pw.println("<a href=\"/paging?currentPage=" + books.getNextPage() + "&search=" + search + "&searchData=" + searchData + "\">다음</a>");
         }
 
+        pw.println("</div>");
         pw.println("</div>");
 
         pw.println("<br>");
