@@ -4,16 +4,22 @@ package com.example.servelet_library.service;
 import com.example.servelet_library.domain.Book;
 import com.example.servelet_library.domain.BookRepository;
 
+import java.sql.DriverManager;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class BookReadService {
-    private BookRepository bookRepository;
-    public BookReadService(BookRepository bookRepository){
-        this.bookRepository = bookRepository;
+    private static BookReadService bookReadService=new BookReadService();
+    private BookReadService(){
     }
+
+    public static BookReadService getInstance(){
+        return bookReadService;
+    }
+
+    private BookRepository bookRepository=BookRepository.getInstance();
 
     public  List<Book> findByAuthor(){
         String author = "저자가 넘어옴";

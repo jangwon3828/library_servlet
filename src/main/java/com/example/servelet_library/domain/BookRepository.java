@@ -1,5 +1,7 @@
 package com.example.servelet_library.domain;
 
+import com.example.servelet_library.service.BookReadService;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -11,7 +13,9 @@ public class BookRepository {
     private static Connection con;
     private static Statement st;
 
-    public BookRepository(){
+    private static BookRepository bookRepository =new BookRepository();
+
+    private  BookRepository(){
         try {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library?serverTimezon=UTC", "root", "1234");
             st = con.createStatement();
@@ -19,6 +23,9 @@ public class BookRepository {
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+    public static BookRepository getInstance(){
+        return bookRepository;
     }
 
     public List<Book> findByAuthor(String author) {

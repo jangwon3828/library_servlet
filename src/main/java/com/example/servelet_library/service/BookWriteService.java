@@ -9,13 +9,16 @@ import java.util.List;
 
 public class BookWriteService {
 
-    private BookRepository bookRepository;
-    private BookReadService bookReadService;
-
-    public BookWriteService(BookRepository bookRepository, BookReadService bookReadService){
-        this.bookRepository=bookRepository;
-        this.bookReadService=bookReadService;
+    private static BookWriteService bookWriteService=new BookWriteService();
+    private BookWriteService(){
     }
+
+    public static BookWriteService getInstance(){
+        return bookWriteService;
+    }
+
+    private BookRepository bookRepository=BookRepository.getInstance();
+    private BookReadService bookReadService=BookReadService.getInstance();
 
     public void getNewBookInfo() {
         String bookName = null;
