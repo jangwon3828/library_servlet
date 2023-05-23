@@ -208,7 +208,9 @@ public class BookRepository {
 
     public void deleteBook(Long book_id) {
         try {
-            st.execute("DELETE FROM books WHERE book_id='" + book_id + "'");
+            int bookId= Math.toIntExact(book_id);
+            String sql = "DELETE FROM books WHERE book_id= " + bookId + ";";
+            st.execute(sql);
         } catch (Exception e) {
             System.out.println("에러발생 deleteBook");
         }
