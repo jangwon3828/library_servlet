@@ -127,12 +127,9 @@ public class PagingServlet extends HttpServlet {
             pw.println("<td>" + book.getCount() + "</td>");
             pw.println("<td>" + book.getBorrow_count() + "</td>");
             pw.println("<td>" + book.getISBN_NO() + "</td>");
-            pw.println("<td>");
-            pw.println("<a href='#' onclick='submitForm(" + book.getBook_id() + ")'>수정</a>");
-            pw.println("<form id='updateForm" + book.getBook_id() + "' method='post' action='updateok' style='display:none;'>");
-            pw.println("<input type='hidden' name='id' value='" +  book.getBook_id() + "'/>");
-            pw.println("<input type='hidden' name='updateName' value='독수리'/>");
-            pw.println("</form>");
+            pw.println("<form action=\"/library_servlet/checkout\" method=\"'get'\">");
+            pw.println("<input type = \"hidden\" name=\"book_id\" value=\""+book.getBook_id()+"\">");
+            pw.println("<td><button type=\"submit\">"+"대여</button></td>");
             pw.println("</td>");
             pw.println("</tr>");
         }
