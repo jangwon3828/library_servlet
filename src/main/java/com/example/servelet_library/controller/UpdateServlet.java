@@ -91,7 +91,7 @@ public class UpdateServlet extends HttpServlet {
                 "    <fieldset>\n" +
                 "       <input type = \"hidden\" name=\"book_id\" value=\"" + book.getBook_id() + "\">\n"+
                 "      도서명 : <input type = \"text\" name=\"name\" value="+book.getBook_name()+" required/><br><br>\n" +
-                "      저자명 : <input type = \"text\" name=\"author\"  value="+book.getAuthor()+"required/><br><br>\n" +
+                "      저자명 : <input type = \"text\" name=\"author\"  value="+book.getAuthor()+" required/><br><br>\n" +
                 "      출판사 : <input type = \"text\" name=\"publisher\" value="+book.getPublisher()+" required/><br><br>\n" +
                 "      ISBN : <input type = \"text\" name=\"ISBN\" value="+book.getISBN_NO()+" required/><br><br>\n" +
                 "      출판연도 : <input type = \"text\" name=\"year_of_publication\" value="+book.getYear_of_publication()+" required /><br><br>\n" +

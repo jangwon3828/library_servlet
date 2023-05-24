@@ -53,4 +53,8 @@ public class BookWriteService {
     public boolean checkout(Long book_id) {
         return bookRepository.checkoutBook(book_id);
     }
+
+    public boolean returnBook(Long book_id) {
+        return bookRepository.returnBook(book_id);
+    }
 }
