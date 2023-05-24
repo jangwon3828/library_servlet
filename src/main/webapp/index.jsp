@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hahmlet&display=swap');
+
         html, body {
             height: 100%;
             margin: 0;
@@ -59,7 +60,7 @@
             cursor: pointer;
         }
 
-        .submit:hover, button:hover{
+        .submit:hover, button:hover {
             background-color: #00A5E5;
         }
 
@@ -71,7 +72,7 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            margin:10px;
+            margin: 10px;
         }
 
     </style>
@@ -99,7 +100,7 @@
     <div class="item">
         <button type="button" onclick="location.href='/library_servlet/findRecommandServlet'">추천 도서</button>
         <button type="button" onclick="location.href='/library_servlet/html/application.html'">도서 신청</button>
-        <button type="button" onclick="location.href='/library_servlet/html/application.html'">도서 관리</button>
+        <button type="button" onclick="location.href='/library_servlet/manage'">도서 관리</button>
     </div>
 </div>
 </body>

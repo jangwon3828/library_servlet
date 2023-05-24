@@ -19,7 +19,7 @@ public class ManageServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
-        BooksPage books=bookReadService.findAll();
+        BooksPage books = bookReadService.findAll();
 
         resp.setContentType("text/html;charset=utf-8");
 
@@ -98,7 +98,8 @@ public class ManageServlet extends HttpServlet {
         pw.println("<th>잔여 권수</th>");
         pw.println("<th>누적 대여 횟수</th>");
         pw.println("<th>꽂혀있는 위치</th>");
-        pw.println("<th>대출</th>");//대출예약버튼 만약 0이라면 대출 불가능
+        pw.println("<th>수정</th>");//대출예약버튼 만약 0이라면 대출 불가능
+        pw.println("<th>삭제</th>");//대출예약버튼 만약 0이라면 대출 불가능
         pw.println("</tr>");
 
         for (Book book : books.getBooks()) {
@@ -110,11 +111,13 @@ public class ManageServlet extends HttpServlet {
             pw.println("<td>" + book.getCount() + "</td>");
             pw.println("<td>" + book.getBorrow_count() + "</td>");
             pw.println("<td>" + book.getISBN_NO() + "</td>");
-            pw.println("<td>");
-            pw.println("<a href='#' onclick='submitForm(" + book.getBook_id() + ")'>수정</a>");
-            pw.println("<form id='updateForm" + book.getBook_id() + "' method='post' action='updateok' style='display:none;'>");
-            pw.println("<input type='hidden' name='id' value='" +  book.getBook_id() + "'/>");
-            pw.println("<input type='hidden' name='updateName' value='독수리'/>");
+            pw.println("<form action=\"/library_servlet/updateServlet\" method=\"'post'\">");
+            pw.println("<input type = \"hidden\" name=\"book_id\" value=\"" + book.getBook_id() + "\">");
+            pw.println("<td><button type=\"submit\">" + "수정</button></td>");
+            pw.println("</form>");
+            pw.println("<form action=\"/library_servlet/delete\" method=\"'post'\">");
+            pw.println("<input type = \"hidden\" name=\"book_id\" value=\"" + book.getBook_id() + "\">");
+            pw.println("<td><button type=\"submit\">" + "삭제</button></td>");
             pw.println("</form>");
             pw.println("</td>");
             pw.println("</tr>");
@@ -126,7 +129,7 @@ public class ManageServlet extends HttpServlet {
 
 // 이전 페이지 링크
         if (books.hasPreviousPage()) {
-            pw.println("<a class=\"paging\" href=\"/library_servlet/paging?currentPage=" + books.getPreviousPage() +  "\">이전</a>");
+            pw.println("<a class=\"paging\" href=\"/library_servlet/manage_paging?currentPage=" + books.getPreviousPage() + "\">이전</a>");
         }
 
 // 페이지 번호 링크
@@ -139,14 +142,16 @@ public class ManageServlet extends HttpServlet {
         }
 // 다음 페이지 링크
         if (books.hasNextPage()) {
-            pw.println("<a class=\"paging\" href=\"/library_servlet/manage_paging?currentPage=" + books.getNextPage() +"\">다음</a>");
+            pw.println("<a class=\"paging\" href=\"/library_servlet/manage_paging?currentPage=" + books.getNextPage() + "\">다음</a>");
         }
 
         pw.println("</div>");
         pw.println("</div>");
 
         pw.println("<br>");
+        pw.println("<div class='footer'>");
         pw.println("<a class=\"back\" href='/library_servlet'>메인페이지로 이동</a>");
+        pw.println("</div>");
 
         pw.println("</body>");
         pw.println("</html>");

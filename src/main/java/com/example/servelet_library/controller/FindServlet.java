@@ -21,6 +21,7 @@ public class FindServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.addCookie(new Cookie("book_ID", "-1"));
         req.setCharacterEncoding("utf-8");
         String search = req.getParameter("search");
         String searchData = req.getParameter("searchData");
@@ -141,12 +142,12 @@ public class FindServlet extends HttpServlet {
                     String storeID = cookie.getValue();
                     if (Long.parseLong(storeID) == book.getBook_id()) {
                         pw.println("<form action=\"/library_servlet/checkout\" method=\"'get'\">");
-                        pw.println("<input type = \"hidden\" name=\"msg\" value=\"" + storeID+"_"+ book.getBook_id()+"_same_"+ books.getCurrentPage()+"_"+search+"_"+searchData + "\">");
+                        pw.println("<input type = \"hidden\" name=\"msg\" value=\"" + storeID + "_" + book.getBook_id() + "_same_" + books.getCurrentPage() + "_" + search + "_" + searchData + "\">");
                         pw.println("<td><button type=\"submit\">" + "취소</button></td>");
                         pw.println("</form>");
                     } else {
                         pw.println("<form action=\"/library_servlet/checkout\" method=\"'get'\">");
-                        pw.println("<input type = \"hidden\" name=\"msg\" value=\"" + storeID+"_"+ book.getBook_id()+"_diff_"+ books.getCurrentPage()+"_"+search+"_"+searchData +  "\">");
+                        pw.println("<input type = \"hidden\" name=\"msg\" value=\"" + storeID + "_" + book.getBook_id() + "_diff_" + books.getCurrentPage() + "_" + search + "_" + searchData + "\">");
                         pw.println("<td><button type=\"submit\">" + "대여</button></td>");
                         pw.println("</form>");
 
