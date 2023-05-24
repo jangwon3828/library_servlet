@@ -57,7 +57,7 @@ public class BookRepository {
 
     public BooksPage findByPublisher(String publisher, Integer currentPage) {
         String query = "select * from books where publisher  like '%" + publisher + "%'";
-        return getBooks(query,currentPage);
+        return getBooks(query, currentPage);
     }
 
     public Book findByISBM(String isbm) {
@@ -83,29 +83,30 @@ public class BookRepository {
 
     }
 
-    public BooksPage findByAllPage() {
+
+    public BooksPage findByAllPage(Integer integer) {
         String query = "select * from books";
-        return getBooks(query, null);
+        return getBooks(query, integer);
 
     }
 
     private BooksPage getBooks(String query, Integer currentPage) {
         List<Book> books = new ArrayList<>();
         int pageSize = 10;
-        currentPage= currentPage==null?1:currentPage;
+        currentPage = currentPage == null ? 1 : currentPage;
         int totalPages = 0;
         int totalCount = 0;
         try {
 
             ResultSet rs = st.executeQuery(query);
-          while (rs.next()){
-              totalCount++;
-          }
+            while (rs.next()) {
+                totalCount++;
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         int startRow = (currentPage - 1) * pageSize;
-        ResultSet resultSet=null;
+        ResultSet resultSet = null;
         try {
 
             query += " LIMIT " + startRow + " , " + pageSize + " ;";
@@ -208,28 +209,43 @@ public class BookRepository {
 
     public void deleteBook(Long book_id) {
         try {
-            st.execute("DELETE FROM books WHERE book_id='" + book_id + "'");
+            int bookId = Math.toIntExact(book_id);
+            String sql = "DELETE FROM books WHERE book_id= " + bookId + ";";
+            st.execute(sql);
         } catch (Exception e) {
             System.out.println("에러발생 deleteBook");
         }
     }
 
-    public void checkoutBook(Long book_id, Long user_id) {
+    public boolean checkoutBook(Long book_id) {
         int bookId = Math.toIntExact(book_id);
-        int userId = Math.toIntExact(user_id);
+        Book byId = findById(book_id);
+        if (byId.getCount() == 0) {
+            return false;
+        }
         String query = "update books set borrowcount = borrowcount +1 , count = count-1 where book_id= " + bookId;
 
         try {
             st.execute(query);
-            query = "update users set book_id= " + bookId + " where user_id = " + userId;
-            st.execute(query);
+            return true;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return false;
         }
+
     }
 
-    public void returnBook(Long book_id) {
+    public boolean returnBook(Long book_id) {
         String query = "update books set count = count+1 where book_id= " + book_id;
+        try {
+            st.execute(query);
+        } catch (SQLException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public void plusBook(Book book) {
+        String query = "update books set count = count+1 where book_id= " + book.getBook_id();
         try {
             st.execute(query);
         } catch (SQLException e) {
@@ -237,8 +253,13 @@ public class BookRepository {
         }
     }
 
-    public void plusBook(Book book) {
-        String query = "update books set count = count+1 where book_id= " + book.getBook_id();
+    public void updateBook(Book book) {
+        String query = "update books set bookname ='"
+                + book.getBook_name() + "' , author = '"
+                + book.getAuthor() + "', publisher = '"
+                + book.getPublisher() + "', Year_of_publication = '"
+                + book.getYear_of_publication()
+                + "' where book_id= " + book.getBook_id();
         try {
             st.execute(query);
         } catch (SQLException e) {

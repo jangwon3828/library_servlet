@@ -74,4 +74,30 @@
         <servlet-name>checkout</servlet-name>
         <url-pattern>/checkout</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>updateServlet</servlet-name>
+        <servlet-class>com.example.servelet_library.controller.UpdateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>updateServlet</servlet-name>
+        <url-pattern>/updateServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>updateOkServlet</servlet-name>
+        <servlet-class>com.example.servelet_library.controller.UpdateOkServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>updateOkServlet</servlet-name>
+        <url-pattern>/updateOkServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>delete</servlet-name>
+        <servlet-class>com.example.servelet_library.controller.DeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>delete</servlet-name>
+        <url-pattern>/delete</url-pattern>
+    </servlet-mapping>
 </web-app>
