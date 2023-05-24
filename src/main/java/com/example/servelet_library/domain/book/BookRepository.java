@@ -83,9 +83,10 @@ public class BookRepository {
 
     }
 
-    public BooksPage findByAllPage() {
+
+    public BooksPage findByAllPage(Integer integer) {
         String query = "select * from books";
-        return getBooks(query, null);
+        return getBooks(query, integer);
 
     }
 
