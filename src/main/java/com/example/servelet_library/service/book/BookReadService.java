@@ -62,4 +62,8 @@ public class BookReadService {
     public BooksPage findAll() {
         return bookRepository.findAll();
     }
+
+    public BooksPage findByAllPage(Integer currentPage) {
+        return bookRepository.findByAllPage(currentPage);
+    }
 }

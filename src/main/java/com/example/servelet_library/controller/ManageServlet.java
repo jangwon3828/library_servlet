@@ -129,7 +129,7 @@ public class ManageServlet extends HttpServlet {
 
 // 이전 페이지 링크
         if (books.hasPreviousPage()) {
-            pw.println("<a class=\"paging\" href=\"/library_servlet/paging?currentPage=" + books.getPreviousPage() +  "\">이전</a>");
+            pw.println("<a class=\"paging\" href=\"/library_servlet/manage_paging?currentPage=" + books.getPreviousPage() +  "\">이전</a>");
         }
 
 // 페이지 번호 링크

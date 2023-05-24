@@ -20,7 +20,7 @@ public class ManagePagingServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
         Integer currentPage = Integer.parseInt(req.getParameter("currentPage"));
-        BooksPage books=bookReadService.findAll();
+        BooksPage books=bookReadService.findByAllPage(currentPage);
         books.changeCurrentPage(currentPage);
         resp.setContentType("text/html;charset=utf-8");
 
