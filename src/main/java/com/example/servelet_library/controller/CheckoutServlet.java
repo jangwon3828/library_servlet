@@ -1,38 +1,39 @@
 package com.example.servelet_library.controller;
 
-import com.example.servelet_library.domain.book.Book;
-import com.example.servelet_library.service.book.BookReadService;
 import com.example.servelet_library.service.book.BookWriteService;
+
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class CheckoutServlet extends HttpServlet {
-
     private BookWriteService bookWriteService = BookWriteService.getInstance();
-    private BookReadService bookReadService = BookReadService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Long book_id = Long.valueOf(req.getParameter("book_id"));
+        req.setCharacterEncoding("utf-8");
+        String msg = req.getParameter("msg");
+        String[] value = msg.split("_");
 
-        boolean checkout = bookWriteService.checkout(book_id);
-        resp.setContentType("text/html; charset=utf-8");
+        for (Cookie cookie : req.getCookies()) {
+            if (cookie.getName().equals("book_ID")) {
+                if (value[2].equals("same")) {
+                    cookie.setValue("-1");
+                } else {
+                    bookWriteService.checkout(Long.parseLong(value[1]));
+                    cookie.setValue(value[1]);
+                }
+                bookWriteService.returnBook(Long.parseLong(value[0]));
+            }
+        }
 
-        PrintWriter out = resp.getWriter();
-       if(checkout){
-           out.println("<script>alert('성공적으로 빌렸습니다.'); location.href=\"/library_servlet\";</script>");
-       }else {
-           out.println("<script>alert('현재 도서관에 책이 없어 대여할 수 없습니다.'); location.href=\"/library_servlet\";</script>");
-       }
-        out.close();
+        this.getServletContext().getRequestDispatcher("/paging?currentPage=" + value[3] + "&search=" + value[4] + "&searchData=" + value[5]).forward(req, resp);
 
-
+//        resp.sendRedirect("/library_servlet/paging?currentPage=" + value[2] + "&search=" + value[3] + "&searchData=" + value[4]);
     }
 }

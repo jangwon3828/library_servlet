@@ -258,7 +258,8 @@ public class BookRepository {
                 + book.getBook_name() + "' , author = '"
                 + book.getAuthor() + "', publisher = '"
                 + book.getPublisher() + "', Year_of_publication = '"
-                + book.getYear_of_publication()
+                + book.getYear_of_publication() + "', ISBN_NO = '"
+                + book.getISBN_NO()
                 + "' where book_id= " + book.getBook_id();
         try {
             st.execute(query);

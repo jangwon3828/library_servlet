@@ -4,7 +4,7 @@ package com.example.servelet_library.domain.book;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Book implements Comparable<Book>{
+public class Book implements Comparable<Book> {
     private Long book_id;
 
     @Override
@@ -31,8 +31,8 @@ public class Book implements Comparable<Book>{
     public Book() {
     }
 
-    public Book(Long  book_id, String book_name, String author, String publisher, Long borrow_count, String ISBN_NO, LocalDate year_of_publication, Long count) {
-        this.book_id=book_id;
+    public Book(Long book_id, String book_name, String author, String publisher, Long borrow_count, String ISBN_NO, LocalDate year_of_publication, Long count) {
+        this.book_id = book_id;
         this.book_name = book_name;
         this.author = author;
         this.publisher = publisher;
@@ -74,28 +74,28 @@ public class Book implements Comparable<Book>{
         return count;
     }
 
-    public void updateBookName(String bookName){
+    public void updateBookName(String bookName) {
         this.book_name = bookName;
     }
 
-    public void updateAuthor(String author){
+    public void updateAuthor(String author) {
         this.author = author;
     }
 
-    public void updatePublisher(String publisher){
+    public void updatePublisher(String publisher) {
         this.publisher = publisher;
     }
 
-    public void updateBorrowCount(Long borrowCount){
+    public void updateBorrowCount(Long borrowCount) {
         this.borrow_count = borrowCount;
     }
 
 
-    public void updateISBN_NO(String ISBN_NO){
+    public void updateISBN_NO(String ISBN_NO) {
         this.ISBN_NO = ISBN_NO;
     }
 
-    public void updateYearOfPublication(LocalDate year_of_publication){
+    public void updateYearOfPublication(LocalDate year_of_publication) {
         this.year_of_publication = year_of_publication;
     }
 
@@ -104,7 +104,7 @@ public class Book implements Comparable<Book>{
     }
 
     @Override
-    public int compareTo(Book b){
-        return (int) (b.getBorrow_count()-getBorrow_count());
+    public int compareTo(Book b) {
+        return (int) (b.getBorrow_count() - getBorrow_count());
     }
 }

@@ -141,12 +141,12 @@ public class PagingServlet extends HttpServlet {
                     String storeID = cookie.getValue();
                     if (Long.parseLong(storeID) == book.getBook_id()) {
                         pw.println("<form action=\"/library_servlet/checkout\" method=\"'get'\">");
-                        pw.println("<input type = \"hidden\" name=\"msg\" value=\"" + storeID+"_"+book.getBook_id()+"_same_"+ books.getCurrentPage()+"_"+search+"_"+searchData + "\">");
+                        pw.println("<input type = \"hidden\" name=\"msg\" value=\"" + storeID + "_" + book.getBook_id() + "_same_" + books.getCurrentPage() + "_" + search + "_" + searchData + "\">");
                         pw.println("<td><button type=\"submit\">" + "취소</button></td>");
                         pw.println("</form>");
                     } else {
                         pw.println("<form action=\"/library_servlet/checkout\" method=\"'get'\">");
-                        pw.println("<input type = \"hidden\" name=\"msg\" value=\"" +storeID +"_"+book.getBook_id()+"_diff_"+ books.getCurrentPage()+"_"+search+"_"+searchData +  "\">");
+                        pw.println("<input type = \"hidden\" name=\"msg\" value=\"" + storeID + "_" + book.getBook_id() + "_diff_" + books.getCurrentPage() + "_" + search + "_" + searchData + "\">");
                         pw.println("<td><button type=\"submit\">" + "대여</button></td>");
                         pw.println("</form>");
 

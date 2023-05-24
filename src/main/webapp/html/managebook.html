@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>도서 검색</title>
+    <meta charset="UTF-8">
+    <title>도서 검색</title>
 </head>
 <body>
 <div>
-  <form action="/library_servlet/find" method="get">
-    <fieldset>
-      <legend>도서 검색방법</legend>
-      <form>
-        <input type="radio" name="search" value="전체" id="value1">
-        <label for="value1">전체</label>
-        <input type="radio" name="search" value="제목" id="value2">
-        <label for="value2">제목</label>
-        <input type="radio" name="search" value="저자" id="value3">
-        <label for="value3">저자</label>
-        <input type="radio" name="search" value="출판사" id="value4">
-        <label for="value4">출판사</label>
-      </form>
-      <br/>
-      <input type = "text" name="searchData" required/>
-      <button>검색</button>
-    </fieldset>
-  </form>
+    <form action="/library_servlet/find" method="get">
+        <fieldset>
+            <legend>도서 검색방법</legend>
+            <form>
+                <input type="radio" name="search" value="전체" id="value1">
+                <label for="value1">전체</label>
+                <input type="radio" name="search" value="제목" id="value2">
+                <label for="value2">제목</label>
+                <input type="radio" name="search" value="저자" id="value3">
+                <label for="value3">저자</label>
+                <input type="radio" name="search" value="출판사" id="value4">
+                <label for="value4">출판사</label>
+            </form>
+            <br/>
+            <input type="text" name="searchData" required/>
+            <button>검색</button>
+        </fieldset>
+    </form>
 </div>
 </body>
 </html>

@@ -23,9 +23,8 @@ public class DeleteServlet extends HttpServlet {
 
         resp.setContentType("text/html; charset=utf-8");
         PrintWriter out = resp.getWriter();
-        out.println("<script>alert('삭제가 완료 되었습니다.'); location.href=\"/library_servlet\";</script>");
+        out.println("<script>alert('삭제가 완료 되었습니다.'); location.href=\"/library_servlet/manage\";</script>");
         out.close();
-
 
 
     }

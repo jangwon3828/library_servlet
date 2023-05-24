@@ -20,7 +20,7 @@ public class ManagePagingServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
         Integer currentPage = Integer.parseInt(req.getParameter("currentPage"));
-        BooksPage books=bookReadService.findByAllPage(currentPage);
+        BooksPage books = bookReadService.findByAllPage(currentPage);
         books.changeCurrentPage(currentPage);
         resp.setContentType("text/html;charset=utf-8");
 
@@ -143,7 +143,7 @@ public class ManagePagingServlet extends HttpServlet {
         }
 // 다음 페이지 링크
         if (books.hasNextPage()) {
-            pw.println("<a class='paging' href=\"/library_servlet/manage_paging?currentPage=" + books.getNextPage() +  "\">다음</a>");
+            pw.println("<a class='paging' href=\"/library_servlet/manage_paging?currentPage=" + books.getNextPage() + "\">다음</a>");
         }
 
         pw.println("</div>");

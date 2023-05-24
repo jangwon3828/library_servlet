@@ -36,12 +36,12 @@ public class ApplicationServlet extends HttpServlet {
                 publisher,
                 0L,
                 isbn,
-                dateTime,1L);
+                dateTime, 1L);
 //        bookWriteService.
-        if(book.equals(byISBM)){
+        if (book.equals(byISBM)) {
             byISBM.updateCount();
             bookWriteService.plusBook(byISBM);
-        }else {
+        } else {
             bookWriteService.saveBook(book);
         }
         resp.setContentType("text/html; charset=utf-8");
