@@ -75,6 +75,7 @@
         <url-pattern>/checkout</url-pattern>
     </servlet-mapping>
 
+
     <servlet>
         <servlet-name>updateServlet</servlet-name>
         <servlet-class>com.example.servelet_library.controller.UpdateServlet</servlet-class>

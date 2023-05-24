@@ -4,6 +4,7 @@ import com.example.servelet_library.domain.book.Book;
 import com.example.servelet_library.domain.dto.BooksPage;
 import com.example.servelet_library.service.book.BookReadService;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -135,9 +136,23 @@ public class PagingServlet extends HttpServlet {
             pw.println("<td>" + book.getCount() + "</td>");
             pw.println("<td>" + book.getBorrow_count() + "</td>");
             pw.println("<td>" + book.getISBN_NO() + "</td>");
-            pw.println("<form action=\"/library_servlet/checkout\" method=\"'get'\">");
-            pw.println("<input type = \"hidden\" name=\"book_id\" value=\"" + book.getBook_id() + "\">");
-            pw.println("<td><button type=\"submit\">" + "대여</button></td>");
+            for (Cookie cookie : req.getCookies()) {
+                if (cookie.getName().equals("book_ID")) {
+                    String storeID = cookie.getValue();
+                    if (Long.parseLong(storeID) == book.getBook_id()) {
+                        pw.println("<form action=\"/library_servlet/checkout\" method=\"'get'\">");
+                        pw.println("<input type = \"hidden\" name=\"msg\" value=\"" + storeID+"_"+book.getBook_id()+"_same_"+ books.getCurrentPage()+"_"+search+"_"+searchData + "\">");
+                        pw.println("<td><button type=\"submit\">" + "취소</button></td>");
+                        pw.println("</form>");
+                    } else {
+                        pw.println("<form action=\"/library_servlet/checkout\" method=\"'get'\">");
+                        pw.println("<input type = \"hidden\" name=\"msg\" value=\"" +storeID +"_"+book.getBook_id()+"_diff_"+ books.getCurrentPage()+"_"+search+"_"+searchData +  "\">");
+                        pw.println("<td><button type=\"submit\">" + "대여</button></td>");
+                        pw.println("</form>");
+
+                    }
+                }
+            }
             pw.println("</td>");
             pw.println("</tr>");
         }
