@@ -19,14 +19,40 @@ public class BookRepository {
 
     private BookRepository() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library?serverTimezon=UTC", "root", "1234");
-            st = con.createStatement();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    public void connect() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library?serverTimezon=UTC", "root", "1234");
+            st = con.createStatement();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void disconnect(ResultSet rs) {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (st != null) {
+                st.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static BookRepository getInstance() {
         return bookRepository;
@@ -91,6 +117,7 @@ public class BookRepository {
     }
 
     private BooksPage getBooks(String query, Integer currentPage) {
+        connect();
         List<Book> books = new ArrayList<>();
         int pageSize = 10;
         currentPage = currentPage == null ? 1 : currentPage;
@@ -137,15 +164,19 @@ public class BookRepository {
             }
         } catch (Exception e) {
 
+        }finally {
+            disconnect(resultSet);
         }
 
         return new BooksPage(books, currentPage, pageSize, totalPages);
     }
 
     private List<Book> getBookToList(String query) {
+        connect();
         List<Book> books = new ArrayList<>();
+        ResultSet rs=null;
         try {
-            ResultSet rs = st.executeQuery(query);
+            rs = st.executeQuery(query);
 
             while (rs.next()) {
                 String str = rs.getString("year_of_publication");
@@ -166,14 +197,18 @@ public class BookRepository {
         } catch (Exception e) {
             System.out.println("에러발생 findByAuthor");
         }
-
+        finally {
+            disconnect(rs);
+        }
         return books;
     }
 
     private Book getBook(String query) {
+        connect();
         Book book = new Book();
+        ResultSet rs =null;
         try {
-            ResultSet rs = st.executeQuery(query);
+            rs= st.executeQuery(query);
             while (rs.next()) {
                 String str = rs.getString("year_of_publication");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -193,6 +228,8 @@ public class BookRepository {
 
         } catch (Exception e) {
             System.out.println("error findByAuthor");
+        }finally {
+            disconnect(rs);
         }
         return book;
 
@@ -200,26 +237,33 @@ public class BookRepository {
 
 
     public void insertBook(Book book) {
+        connect();
         try {
             st.execute("insert into books(book_id, bookname, author, publisher, borrowcount, ISBN_NO, year_of_publication, count) values (null,'" + book.getBook_name() + "','" + book.getAuthor() + "','" + book.getPublisher() + "','" + book.getBorrow_count() + "','" + book.getISBN_NO() + "','" + book.getYear_of_publication() + "','" + book.getCount() + "');");
         } catch (Exception e) {
             System.out.println("에러발생 insertBook");
+        }finally {
+            disconnect(null);
         }
     }
 
     public void deleteBook(Long book_id) {
+        connect();
         try {
             int bookId = Math.toIntExact(book_id);
             String sql = "DELETE FROM books WHERE book_id= " + bookId + ";";
             st.execute(sql);
         } catch (Exception e) {
             System.out.println("에러발생 deleteBook");
+        }finally {
+            disconnect(null);
         }
     }
 
     public boolean checkoutBook(Long book_id) {
         int bookId = Math.toIntExact(book_id);
         Book byId = findById(book_id);
+        connect();
         if (byId.getCount() == 0) {
             return false;
         }
@@ -230,30 +274,39 @@ public class BookRepository {
             return true;
         } catch (SQLException e) {
             return false;
+        }finally {
+            disconnect(null);
         }
 
     }
 
     public boolean returnBook(Long book_id) {
+        connect();
         String query = "update books set count = count+1 where book_id= " + book_id;
         try {
             st.execute(query);
         } catch (SQLException e) {
             return false;
+        }finally {
+            disconnect(null);
         }
         return true;
     }
 
     public void plusBook(Book book) {
+        connect();
         String query = "update books set count = count+1 where book_id= " + book.getBook_id();
         try {
             st.execute(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            disconnect(null);
         }
     }
 
     public void updateBook(Book book) {
+        connect();
         String query = "update books set bookname ='"
                 + book.getBook_name() + "' , author = '"
                 + book.getAuthor() + "', publisher = '"
@@ -265,6 +318,8 @@ public class BookRepository {
             st.execute(query);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            disconnect(null);
         }
     }
 }
