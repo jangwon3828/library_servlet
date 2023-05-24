@@ -57,7 +57,7 @@ public class BookRepository {
 
     public BooksPage findByPublisher(String publisher, Integer currentPage) {
         String query = "select * from books where publisher  like '%" + publisher + "%'";
-        return getBooks(query,currentPage);
+        return getBooks(query, currentPage);
     }
 
     public Book findByISBM(String isbm) {
@@ -93,20 +93,20 @@ public class BookRepository {
     private BooksPage getBooks(String query, Integer currentPage) {
         List<Book> books = new ArrayList<>();
         int pageSize = 10;
-        currentPage= currentPage==null?1:currentPage;
+        currentPage = currentPage == null ? 1 : currentPage;
         int totalPages = 0;
         int totalCount = 0;
         try {
 
             ResultSet rs = st.executeQuery(query);
-          while (rs.next()){
-              totalCount++;
-          }
+            while (rs.next()) {
+                totalCount++;
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         int startRow = (currentPage - 1) * pageSize;
-        ResultSet resultSet=null;
+        ResultSet resultSet = null;
         try {
 
             query += " LIMIT " + startRow + " , " + pageSize + " ;";
@@ -209,7 +209,7 @@ public class BookRepository {
 
     public void deleteBook(Long book_id) {
         try {
-            int bookId= Math.toIntExact(book_id);
+            int bookId = Math.toIntExact(book_id);
             String sql = "DELETE FROM books WHERE book_id= " + bookId + ";";
             st.execute(sql);
         } catch (Exception e) {
@@ -220,7 +220,7 @@ public class BookRepository {
     public boolean checkoutBook(Long book_id) {
         int bookId = Math.toIntExact(book_id);
         Book byId = findById(book_id);
-        if(byId.getCount()==0){
+        if (byId.getCount() == 0) {
             return false;
         }
         String query = "update books set borrowcount = borrowcount +1 , count = count-1 where book_id= " + bookId;
@@ -234,13 +234,14 @@ public class BookRepository {
 
     }
 
-    public void returnBook(Long book_id) {
+    public boolean returnBook(Long book_id) {
         String query = "update books set count = count+1 where book_id= " + book_id;
         try {
             st.execute(query);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return false;
         }
+        return true;
     }
 
     public void plusBook(Book book) {
@@ -255,10 +256,10 @@ public class BookRepository {
     public void updateBook(Book book) {
         String query = "update books set bookname ='"
                 + book.getBook_name() + "' , author = '"
-                +book.getAuthor()+"', publisher = '"
-                +book.getPublisher()+"', Year_of_publication = '"
-                +book.getYear_of_publication()
-                +"' where book_id= " + book.getBook_id();
+                + book.getAuthor() + "', publisher = '"
+                + book.getPublisher() + "', Year_of_publication = '"
+                + book.getYear_of_publication()
+                + "' where book_id= " + book.getBook_id();
         try {
             st.execute(query);
         } catch (SQLException e) {

@@ -112,11 +112,11 @@ public class ManagePagingServlet extends HttpServlet {
             pw.println("<td>" + book.getCount() + "</td>");
             pw.println("<td>" + book.getBorrow_count() + "</td>");
             pw.println("<td>" + book.getISBN_NO() + "</td>");
-            pw.println("<form action=\"/library_servlet/checkout\" method=\"'get'\">");
+            pw.println("<form action=\"/library_servlet/updateServlet\" method=\"'post'\">");
             pw.println("<input type = \"hidden\" name=\"book_id\" value=\"" + book.getBook_id() + "\">");
             pw.println("<td><button type=\"submit\">" + "수정</button></td>");
             pw.println("</form>");
-            pw.println("<form action=\"/library_servlet/checkout\" method=\"'get'\">");
+            pw.println("<form action=\"/library_servlet/delete\" method=\"'post'\">");
             pw.println("<input type = \"hidden\" name=\"book_id\" value=\"" + book.getBook_id() + "\">");
             pw.println("<td><button type=\"submit\">" + "삭제</button></td>");
             pw.println("</form>");

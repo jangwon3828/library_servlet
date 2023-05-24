@@ -23,12 +23,10 @@ public class CheckoutServlet extends HttpServlet {
         Long book_id = Long.valueOf(req.getParameter("book_id"));
 
         boolean checkout = bookWriteService.checkout(book_id);
-
         resp.setContentType("text/html; charset=utf-8");
 
         PrintWriter out = resp.getWriter();
        if(checkout){
-
            out.println("<script>alert('성공적으로 빌렸습니다.'); location.href=\"/library_servlet\";</script>");
        }else {
            out.println("<script>alert('현재 도서관에 책이 없어 대여할 수 없습니다.'); location.href=\"/library_servlet\";</script>");
