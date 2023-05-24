@@ -65,4 +65,13 @@
         <servlet-name>managePagingServlet</servlet-name>
         <url-pattern>/manage_paging</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>checkout</servlet-name>
+        <servlet-class>com.example.servelet_library.controller.CheckoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>checkout</servlet-name>
+        <url-pattern>/checkout</url-pattern>
+    </servlet-mapping>
 </web-app>

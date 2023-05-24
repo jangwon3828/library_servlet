@@ -3,13 +3,16 @@ package com.example.servelet_library.controller;
 import com.example.servelet_library.domain.book.Book;
 import com.example.servelet_library.domain.dto.BooksPage;
 import com.example.servelet_library.service.book.BookReadService;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 //컨트롤러 만들때 항상
 public class FindServlet extends HttpServlet {
@@ -21,19 +24,19 @@ public class FindServlet extends HttpServlet {
         req.setCharacterEncoding("utf-8");
         String search = req.getParameter("search");
         String searchData = req.getParameter("searchData");
-        BooksPage books=null;
+        BooksPage books = null;
         switch (search) {
             case "전체":
-                books  = bookReadService.findByThreeWay(searchData, null);
+                books = bookReadService.findByThreeWay(searchData, null);
                 break;
             case "제목":
-                books  = bookReadService.findByBookName(searchData, null);
+                books = bookReadService.findByBookName(searchData, null);
                 break;
             case "저자":
-                books  = bookReadService.findByAuthor(searchData, null);
+                books = bookReadService.findByAuthor(searchData, null);
                 break;
             case "출판사":
-                books  = bookReadService.findByPublisher(searchData, null);
+                books = bookReadService.findByPublisher(searchData, null);
                 break;
         }
         resp.setContentType("text/html;charset=utf-8");
@@ -133,10 +136,23 @@ public class FindServlet extends HttpServlet {
             pw.println("<td>" + book.getCount() + "</td>");
             pw.println("<td>" + book.getBorrow_count() + "</td>");
             pw.println("<td>" + book.getISBN_NO() + "</td>");
-            pw.println("<form action=\"/library_servlet/checkout\" method=\"'get'\">");
-            pw.println("<input type = \"hidden\" name=\"book_id\" value=\"" + book.getBook_id() + "\">");
-            pw.println("<td><button type=\"submit\">" + "대여</button></td>");
-            pw.println("</form>");
+            for (Cookie cookie : req.getCookies()) {
+                if (cookie.getName().equals("book_ID")) {
+                    String storeID = cookie.getValue();
+                    if (Long.parseLong(storeID) == book.getBook_id()) {
+                        pw.println("<form action=\"/library_servlet/checkout\" method=\"'get'\">");
+                        pw.println("<input type = \"hidden\" name=\"msg\" value=\"" + storeID+"_"+ book.getBook_id()+"_same_"+ books.getCurrentPage()+"_"+search+"_"+searchData + "\">");
+                        pw.println("<td><button type=\"submit\">" + "취소</button></td>");
+                        pw.println("</form>");
+                    } else {
+                        pw.println("<form action=\"/library_servlet/checkout\" method=\"'get'\">");
+                        pw.println("<input type = \"hidden\" name=\"msg\" value=\"" + storeID+"_"+ book.getBook_id()+"_diff_"+ books.getCurrentPage()+"_"+search+"_"+searchData +  "\">");
+                        pw.println("<td><button type=\"submit\">" + "대여</button></td>");
+                        pw.println("</form>");
+
+                    }
+                }
+            }
             pw.println("</td>");
             pw.println("</tr>");
         }
